@@ -5,6 +5,8 @@
 #ifndef PROJECT1_MUSIC_H
 #define PROJECT1_MUSIC_H
 
+#include <stdbool.h>
+
 typedef struct musica {
     int id;
     char titulo[200];
@@ -34,15 +36,14 @@ typedef struct lplaylists_no {
     struct lplaylists_no *prox;
 } lplaylists_no;
 
-musica *createMusicNode();
+musica *createMusicNode(int *musicId);
 
-void insertOnHead(musica_no *musica);
+void insertOnHead(musica_no *musica, int *musicId);
 
-// TODO implement hour method
 void listAndPrintLL(musica_no *ll);
 
+void *convertHHMMSS(musica *musica);
 
-// TODO implement method
-char *convertHHMMSS(musica *musica);
+int isMusicLinkedListEmpty(musica_no *ll);
 
 #endif //PROJECT1_MUSIC_H

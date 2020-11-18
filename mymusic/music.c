@@ -4,12 +4,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "string.h"
 #include "strings.h"
 #include "music.h"
 
-
-musica *createMusicNode() {
+musica *createMusicNode(int *musicId) {
     struct musica *newMusic = malloc(sizeof(struct musica));
 
     fflush(stdin);
@@ -27,16 +25,18 @@ musica *createMusicNode() {
     fflush(stdin);
 
     printf("Duração em segundos: ");
-    // TODO improve get duration
     scanf("%d", &newMusic->duracao);
     fflush(stdin);
+
+    newMusic->id = (*musicId)++;
+
     return newMusic;
 }
 
-void insertOnHead(musica_no *ll) {
+void insertOnHead(musica_no *ll, int *musicId) {
     struct musica_no *newMusicNode = malloc(sizeof(struct musica));
 
-    struct musica *newMusic = createMusicNode();
+    struct musica *newMusic = createMusicNode(musicId);
 
     newMusicNode->musica = newMusic;
 
@@ -48,9 +48,28 @@ void insertOnHead(musica_no *ll) {
     ll->prox = newMusicNode;
 }
 
+void *convertHHMMSSAndPrint(musica_no *musicaNo) {
+    int sec, h, m, s;
+
+    h = (musicaNo->musica->duracao)/3600;
+    m = (musicaNo->musica->duracao - (3600*h))/60;
+    s = (musicaNo->musica->duracao - (3600*h) - (m*60));
+
+    printf("%d:%d:%d\n", h,m,s);
+}
+
 void listAndPrintLL(musica_no *ll) {
     while (ll->prox != NULL) {
-        printf("ID: %d TITULO: %s ARTISTAl: %s ALBUM: %s DURACAO: dura \n", ll->prox->musica->id, ll->prox->musica->titulo, ll->prox->musica->artista, ll->prox->musica->album);
+        printf("ID: %d TITULO: %s ARTISTAl: %s ALBUM: %s DURACAO: ", ll->prox->musica->id, ll->prox->musica->titulo, ll->prox->musica->artista, ll->prox->musica->album);
+        convertHHMMSSAndPrint(ll->prox);
         ll = ll->prox;
     }
+}
+
+// TODO implement nullable check function
+int isMusicLinkedListEmpty(musica_no *ll) {
+    if(ll->prox != NULL) {
+        return 1;
+    }
+    return 0;
 }
