@@ -46,4 +46,8 @@ void *convertHHMMSS(musica *musica);
 
 int isMusicLinkedListEmpty(musica_no *ll);
 
+void makePrincipalMenu();
+
+void makePlaylistMenu();
+
 #endif //PROJECT1_MUSIC_H
