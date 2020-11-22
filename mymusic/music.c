@@ -74,6 +74,53 @@ int isMusicLinkedListEmpty(musica_no *ll) {
     return 0;
 }
 
+playlist_no makeAPlaylist() {
+    struct playlist_no *ll = malloc(sizeof(struct playlist_no));
+    return *ll;
+}
+
+void add_node(struct node* pnode, struct list* plist, musica_no *ll, int musicid){
+
+    struct node* current;
+    struct node* temp;
+    if (plist->head == NULL){
+        plist->head = pnode;
+        plist->head->next = pnode;
+    }
+    else {
+        current = plist->head;
+        if (current == plist->head->next){
+            plist->head->next = pnode;
+            pnode->next = plist->head;
+        }
+        else {
+            while(current->next!=plist->head)
+                current = current->next;
+
+            current->next = pnode;
+            pnode->next = plist->head;
+        }
+
+    }
+}
+
+void addMusicOnPlaylist(musica_no *ll, playlist_no *Pll, int idMusicToAddOnPlaylist) {
+
+//    while (ll->prox != NULL) {
+//        if(ll->musica->id == idMusicToAddOnPlaylist) {
+//            playlist_no *p = malloc(sizeof(playlist_no));
+//            p->prox = Pll->prox;
+//
+//            while (Pll->prox != p) {
+//                Pll = Pll->prox;
+//            }
+//
+//            Pll->prox = p;
+//            Pll->musica = ll->musica;
+//        }
+//    }
+}
+
 void makePrincipalMenu() {
     {
         printf("-------------------------------------------------------------------------------------------------------------\n");

@@ -22,13 +22,13 @@ typedef struct musica_no {
     struct musica_no *prox;
 } musica_no;
 
-
+// Struct Playlist
 typedef struct playlist_no {
     musica *musica;
     struct playlist_no *prox;
 } playlist_no;
 
-
+// Struct Linked List Playlists
 typedef struct lplaylists_no {
     int id;
     char nome[200];
@@ -45,6 +45,10 @@ void listAndPrintLL(musica_no *ll);
 void *convertHHMMSS(musica *musica);
 
 int isMusicLinkedListEmpty(musica_no *ll);
+
+playlist_no makeAPlaylist();
+
+void addMusicOnPlaylist(musica_no *ll, playlist_no *Pll, int idMusicToAddOnPlaylist);
 
 void makePrincipalMenu();
 
