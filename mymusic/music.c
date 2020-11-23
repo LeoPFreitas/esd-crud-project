@@ -28,7 +28,6 @@ musica *createMusicNode(int *musicId) {
     scanf("%d", &newMusic->duracao);
     fflush(stdin);
 
-    printf("%d", *musicId);
     newMusic->id = (*musicId)++;
 
     return newMusic;

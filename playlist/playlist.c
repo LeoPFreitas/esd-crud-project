@@ -51,8 +51,9 @@ playlist_no *makePlaylist(musica *ll) {
     struct playlist_no *playlistNo = malloc(sizeof(struct playlist_no));
     playlistNo->prox = playlistNo;
 
-    for (int j = 0; j < 2; ++j) {
-        insertMusicOnPlaylist(ll, v[j], playlistNo);
+    for (int j = 0; j < size; ++j) {
+        int aux = v[j];
+        insertMusicOnPlaylist(ll, aux, playlistNo);
     }
 
     return playlistNo;
@@ -90,9 +91,9 @@ void printPlaylistMusics(lplaylists_no *p) {
         printf("\nList is Empty!!!");
     else {
         playlist_no *temp = head->prox;
-        printf("\nList elements are: \n");
-        while (temp->prox != head) {
-            printf("MUSICA: %s\n", temp->prox->musica->titulo);
+        printf("\nAs músicas da playlist %d são: \n", id);
+        while (temp != head) {
+            printf("MUSICA: %s\n", temp->musica->titulo);
             temp = temp->prox;
         }
         printf("\nFim\n");
