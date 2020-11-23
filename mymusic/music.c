@@ -68,69 +68,13 @@ void listAndPrintLL(musica_no *ll) {
     }
 }
 
+
 // TODO implement nullable check function
 int isMusicLinkedListEmpty(musica_no *ll) {
     if (ll->prox != NULL) {
         return 1;
     }
     return 0;
-}
-
-playlist_no* makePlaylistNo() {
-    struct playlist_no *ll = malloc(sizeof(struct playlist_no));
-    ll->prox = ll;
-    return &ll;
-}
-
-void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
-    // TODO extract to validation method (isMusicValid)
-    musica_no *nodeMusic = ll->prox;
-    while (nodeMusic->musica->id != musicId) {
-        // TODO verificar se id existe
-        nodeMusic = nodeMusic->prox;
-    }
-
-    playlist_no *newNode = malloc(sizeof(playlist_no));
-    newNode->musica = nodeMusic->musica;
-
-    // insert
-    if (playlist->prox == NULL) {
-        playlist->prox = newNode;
-        newNode->prox = playlist;
-    } else {
-        playlist_no *playlistTemp = playlist;
-        while (playlistTemp->prox != playlist) {
-            playlistTemp = playlistTemp->prox;
-        }
-        newNode->prox = playlist;
-        playlistTemp->prox = newNode;
-    }
-}
-
-playlist_no *makePlaylist(musica *ll) {
-    int size = 0;
-    int i = 0;
-    char temp;
-
-    printf("Digite o tamanho da playlist: ");
-    scanf("%d", &size);
-    int v[size];
-
-    printf("Digite os id das musicas separadas por espaco: ");
-    do {
-        scanf("%d%c", &v[i], &temp);
-        i++;
-    } while(temp != '\n');
-
-    // create playlist
-    struct playlist_no *playlistNo = malloc(sizeof(struct playlist_no));
-    playlistNo->prox = playlistNo;
-
-    for (int j = 0; j < 2; ++j) {
-        insertMusicOnPlaylist(ll, v[j], playlistNo);
-    }
-
-    return playlistNo;
 }
 
 void makePrincipalMenu() {
