@@ -11,9 +11,9 @@ int main() {
     struct lplaylists_no *playlistsll = malloc(sizeof(lplaylists_no));
 
     Pll->prox = Pll;
+    playlistsll->id = -1;
 
     int musicId = 0;
-    int playListId = 0;
     int idMusicToAddPlaylist = 0;
 
     int *pMusicId = &musicId;

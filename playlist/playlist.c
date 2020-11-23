@@ -34,18 +34,16 @@ void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
 
 playlist_no *makePlaylist(musica *ll) {
     int size = 0;
-    int i = 0;
-    char temp;
 
     printf("Digite o tamanho da playlist: ");
     scanf("%d", &size);
     int v[size];
+    fflush(stdin);
 
     printf("Digite os id das musicas separadas por espaco: ");
-    do {
-        scanf("%d%c", &v[i], &temp);
-        i++;
-    } while (temp != '\n');
+    for (int j = 0; j < size; ++j) {
+        scanf("%d", &v[j]);
+    }
 
     // create playlist
     struct playlist_no *playlistNo = malloc(sizeof(struct playlist_no));
@@ -61,13 +59,20 @@ playlist_no *makePlaylist(musica *ll) {
 
 void insertOnPLaylistHead(musica_no *ll, int *playlistId, lplaylists_no *lpl) {
     struct lplaylists_no *newPlaylist = malloc(sizeof(lplaylists_no));
-    lpl->prox = newPlaylist;
+
+    if (lpl->prox == NULL) {
+        lpl->prox = newPlaylist;
+    } else {
+        while (lpl->prox != NULL) {
+            lpl = lpl->prox;
+        }
+        lpl->prox = newPlaylist;
+    }
 
     printf("Digite o nome da playlist: ");
     scanf("%s", newPlaylist->nome);
     fflush(stdin);
-
-    lpl->id = (*playlistId)++;
+    lpl->prox->id = (*playlistId)++;
     newPlaylist->musicas = makePlaylist(ll);
 }
 
@@ -110,20 +115,58 @@ void removeMusicFromPLaylists(lplaylists_no *lpl) {
     while (lpl->prox !=  NULL) {
 
         // get the playlist_node head pointer
-        playlist_no *head = lpl->prox->musicas->prox;
+        playlist_no *head = lpl->prox->musicas;
 
         // find the music inside that playlist
-        playlist_no *temp = head->prox;
+        playlist_no *temp = head;
+
         while (temp->prox != head) {
             // loop playlist
+            playlist_no * aux = temp;
+            temp = temp->prox;
             if (temp->musica->id == musicId) {
                 printf("Remover musica ID %d", temp->musica->id);
+                aux->prox = temp->prox;
+                temp->prox = NULL;
+                break;
             }
-
-            temp = temp->prox;
         }
-
         // go to the next playlist
         lpl = lpl->prox;
     }
 }
+
+//void deleteNode(struct Node **head_ref, int position)
+//{
+//    // If linked list is empty
+//    if (*head_ref == NULL)
+//        return;
+//
+//    // Store head node
+//    struct Node* temp = *head_ref;
+//
+//    // If head needs to be removed
+//    if (position == 0)
+//    {
+//        *head_ref = temp->next;   // Change head
+//        free(temp);               // free old head
+//        return;
+//    }
+//
+//    // Find previous node of the node to be deleted
+//    for (int i=0; temp!=NULL && i<position-1; i++)
+//        temp = temp->next;
+//
+//    // If position is more than number of nodes
+//    if (temp == NULL || temp->next == NULL)
+//        return;
+//
+//    // Node temp->next is the node to be deleted
+//    // Store pointer to the next of node to be deleted
+//    struct Node *next = temp->next->next;
+//
+//    // Unlink the node from linked list
+//    free(temp->next);  // Free memory
+//
+//    temp->next = next;  // Unlink the deleted node from list
+//}
