@@ -22,6 +22,7 @@ int main() {
     int optionSelected = 0;
     int optionPlaylist = 0;
 
+
     while (1) {
         makePrincipalMenu();
         printf("Selecione uma opção: \n");
@@ -57,6 +58,7 @@ int main() {
                     case 4:
                         // TODO
                         printf("REMOVER MÚSICA DE TODAS AS PLAYLIST\n");
+                        removeMusicFromPLaylists(playlistsll);
                         break;
                     case 0:
                         // TODO

@@ -22,20 +22,6 @@ typedef struct musica_no {
     struct musica_no *prox;
 } musica_no;
 
-// Struct Playlist
-typedef struct playlist_no {
-    musica *musica;
-    struct playlist_no *prox;
-} playlist_no;
-
-// Struct Linked List Playlists
-typedef struct lplaylists_no {
-    int id;
-    char nome[200];
-    playlist_no *musicas;
-    struct lplaylists_no *prox;
-} lplaylists_no;
-
 musica *createMusicNode(int *musicId);
 
 void insertOnHead(musica_no *musica, int *musicId);

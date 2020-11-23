@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../mymusic/music.h"
+#include "../playlist/playlist.h"
 
 void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
     // TODO extract to validation method (isMusicValid)
@@ -85,15 +86,43 @@ void printPlaylistMusics(lplaylists_no *p) {
     }
 
     playlist_no *head = p->prox->musicas;
-    if (head == NULL)
+    if (head->prox == head)
         printf("\nList is Empty!!!");
     else {
         playlist_no *temp = head->prox;
         printf("\nList elements are: \n");
         while (temp->prox != head) {
-            printf("%MUSICA: s\n", temp->prox->musica->titulo);
+            printf("MUSICA: %s\n", temp->prox->musica->titulo);
             temp = temp->prox;
         }
         printf("\nFim\n");
+    }
+}
+
+void removeMusicFromPLaylists(lplaylists_no *lpl) {
+
+    int musicId;
+    printf("Digite o ID da musica: ");
+    scanf("%d", &musicId);
+
+    // loop through playlists
+    while (lpl->prox !=  NULL) {
+
+        // get the playlist_node head pointer
+        playlist_no *head = lpl->prox->musicas->prox;
+
+        // find the music inside that playlist
+        playlist_no *temp = head->prox;
+        while (temp->prox != head) {
+            // loop playlist
+            if (temp->musica->id == musicId) {
+                printf("Remover musica ID %d", temp->musica->id);
+            }
+
+            temp = temp->prox;
+        }
+
+        // go to the next playlist
+        lpl = lpl->prox;
     }
 }
