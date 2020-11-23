@@ -46,12 +46,14 @@ void *convertHHMMSS(musica *musica);
 
 int isMusicLinkedListEmpty(musica_no *ll);
 
-playlist_no makeAPlaylist();
+playlist_no* makePlaylistNo();
 
-void addMusicOnPlaylist(musica_no *ll, playlist_no *Pll, int idMusicToAddOnPlaylist);
+void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist);
 
 void makePrincipalMenu();
 
 void makePlaylistMenu();
+
+playlist_no *makePlaylist(musica *ll);
 
 #endif //PROJECT1_MUSIC_H

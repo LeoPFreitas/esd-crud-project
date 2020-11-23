@@ -8,20 +8,17 @@ int main() {
     struct musica_no *ll = malloc(sizeof(musica_no));
     struct playlist_no *Pll = malloc(sizeof(playlist_no));
 
-    int musicId, optionSelected, optionPlaylist, idMusicToAddPlaylist = 0;
+    int musicId = 0, optionSelected = 0, optionPlaylist = 0, idMusicToAddPlaylist = 0;
     int *p = &musicId;
 
+
     insertOnHead(ll, p);
     insertOnHead(ll, p);
-    listAndPrintLL(ll);
 
-    addMusicOnPlaylist(ll, Pll, 0);
-//    addMusicOnPlaylist(ll, Pll, 1);
+    playlist_no *pp = makePlaylist(ll);
+    printf("lalala");
 
-
-
-
-//    while(1){
+//    while (1) {
 //        makePrincipalMenu();
 //        printf("Selecione uma opção: \n");
 //        fflush(stdin);

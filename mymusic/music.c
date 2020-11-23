@@ -28,6 +28,7 @@ musica *createMusicNode(int *musicId) {
     scanf("%d", &newMusic->duracao);
     fflush(stdin);
 
+    printf("%d", *musicId);
     newMusic->id = (*musicId)++;
 
     return newMusic;
@@ -51,16 +52,17 @@ void insertOnHead(musica_no *ll, int *musicId) {
 void *convertHHMMSSAndPrint(musica_no *musicaNo) {
     int sec, h, m, s;
 
-    h = (musicaNo->musica->duracao)/3600;
-    m = (musicaNo->musica->duracao - (3600*h))/60;
-    s = (musicaNo->musica->duracao - (3600*h) - (m*60));
+    h = (musicaNo->musica->duracao) / 3600;
+    m = (musicaNo->musica->duracao - (3600 * h)) / 60;
+    s = (musicaNo->musica->duracao - (3600 * h) - (m * 60));
 
-    printf("%d:%d:%d\n", h,m,s);
+    printf("%d:%d:%d\n", h, m, s);
 }
 
 void listAndPrintLL(musica_no *ll) {
     while (ll->prox != NULL) {
-        printf("ID: %d TITULO: %s ARTISTAl: %s ALBUM: %s DURACAO: ", ll->prox->musica->id, ll->prox->musica->titulo, ll->prox->musica->artista, ll->prox->musica->album);
+        printf("ID: %d TITULO: %s ARTISTAl: %s ALBUM: %s DURACAO: ", ll->prox->musica->id, ll->prox->musica->titulo,
+               ll->prox->musica->artista, ll->prox->musica->album);
         convertHHMMSSAndPrint(ll->prox);
         ll = ll->prox;
     }
@@ -68,82 +70,88 @@ void listAndPrintLL(musica_no *ll) {
 
 // TODO implement nullable check function
 int isMusicLinkedListEmpty(musica_no *ll) {
-    if(ll->prox != NULL) {
+    if (ll->prox != NULL) {
         return 1;
     }
     return 0;
 }
 
-playlist_no makeAPlaylist() {
+playlist_no* makePlaylistNo() {
     struct playlist_no *ll = malloc(sizeof(struct playlist_no));
-    return *ll;
+    ll->prox = ll;
+    return &ll;
 }
 
-void add_node(struct node* pnode, struct list* plist, musica_no *ll, int musicid){
-
-    struct node* current;
-    struct node* temp;
-    if (plist->head == NULL){
-        plist->head = pnode;
-        plist->head->next = pnode;
+void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
+    // TODO extract to validation method (isMusicValid)
+    musica_no *nodeMusic = ll->prox;
+    while (nodeMusic->musica->id != musicId) {
+        // TODO verificar se id existe
+        nodeMusic = nodeMusic->prox;
     }
-    else {
-        current = plist->head;
-        if (current == plist->head->next){
-            plist->head->next = pnode;
-            pnode->next = plist->head;
-        }
-        else {
-            while(current->next!=plist->head)
-                current = current->next;
 
-            current->next = pnode;
-            pnode->next = plist->head;
-        }
+    playlist_no *newNode = malloc(sizeof(playlist_no));
+    newNode->musica = nodeMusic->musica;
 
+    // insert
+    if (playlist->prox == NULL) {
+        playlist->prox = newNode;
+        newNode->prox = playlist;
+    } else {
+        playlist_no *playlistTemp = playlist;
+        while (playlistTemp->prox != playlist) {
+            playlistTemp = playlistTemp->prox;
+        }
+        newNode->prox = playlist;
+        playlistTemp->prox = newNode;
     }
 }
 
-void addMusicOnPlaylist(musica_no *ll, playlist_no *Pll, int idMusicToAddOnPlaylist) {
+playlist_no *makePlaylist(musica *ll) {
+    int size = 0;
+    int i = 0;
+    char temp;
 
-//    while (ll->prox != NULL) {
-//        if(ll->musica->id == idMusicToAddOnPlaylist) {
-//            playlist_no *p = malloc(sizeof(playlist_no));
-//            p->prox = Pll->prox;
-//
-//            while (Pll->prox != p) {
-//                Pll = Pll->prox;
-//            }
-//
-//            Pll->prox = p;
-//            Pll->musica = ll->musica;
-//        }
-//    }
+    printf("Digite o tamanho da playlist: ");
+    scanf("%d", &size);
+    int v[size];
+
+    printf("Digite os id das musicas separadas por espaco: ");
+    do {
+        scanf("%d%c", &v[i], &temp);
+        i++;
+    } while(temp != '\n');
+
+    // create playlist
+    struct playlist_no *playlistNo = malloc(sizeof(struct playlist_no));
+    playlistNo->prox = playlistNo;
+
+    for (int j = 0; j < 2; ++j) {
+        insertMusicOnPlaylist(ll, v[j], playlistNo);
+    }
+
+    return playlistNo;
 }
 
 void makePrincipalMenu() {
-    {
-        printf("-------------------------------------------------------------------------------------------------------------\n");
-        printf("|                                               MENU PINCIPAL                                                |\n");
-        printf("-------------------------------------------------------------------------------------------------------------\n");
-        printf("1 - Cadastrar nova música\n");
-        printf("2 - Imprime todas as músicas da lista\n");
-        printf("3 - Playlists\n");
-        printf("0 - Sair do programa\n");
-        printf("-------------------------------------------------------------------------------------------------------------\n");
-    };
+    printf("-------------------------------------------------------------------------------------------------------------\n");
+    printf("|                                               MENU PINCIPAL                                                |\n");
+    printf("-------------------------------------------------------------------------------------------------------------\n");
+    printf("1 - Cadastrar nova música\n");
+    printf("2 - Imprime todas as músicas da lista\n");
+    printf("3 - Playlists\n");
+    printf("0 - Sair do programa\n");
+    printf("-------------------------------------------------------------------------------------------------------------\n");
 }
 
 void makePlaylistMenu() {
-    {
-        printf("-------------------------------------------------------------------------------------------------------------\n");
-        printf("|                                                MENU PLAYLIST                                               |\n");
-        printf("-------------------------------------------------------------------------------------------------------------\n");
-        printf("1 - Criar nova Playlist\n");
-        printf("2 - Shuffle Playlist\n");
-        printf("3 - Imprime Playlist\n");
-        printf("4 - Remover música de todas as Playlist\n");
-        printf("0 - Voltar para o Menu Principal\n");
-        printf("-------------------------------------------------------------------------------------------------------------\n");
-    };
+    printf("-------------------------------------------------------------------------------------------------------------\n");
+    printf("|                                                MENU PLAYLIST                                               |\n");
+    printf("-------------------------------------------------------------------------------------------------------------\n");
+    printf("1 - Criar nova Playlist\n");
+    printf("2 - Shuffle Playlist\n");
+    printf("3 - Imprime Playlist\n");
+    printf("4 - Remover música de todas as Playlist\n");
+    printf("0 - Voltar para o Menu Principal\n");
+    printf("-------------------------------------------------------------------------------------------------------------\n");
 }
