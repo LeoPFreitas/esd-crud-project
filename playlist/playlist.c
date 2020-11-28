@@ -57,7 +57,7 @@ playlist_no *makePlaylist(musica *ll) {
   return playlistNo;
 }
 
-void insertOnPLaylistHead(musica_no *ll, int *playlistId, lplaylists_no *lpl) {
+void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
   struct lplaylists_no *newPlaylist = malloc(sizeof(lplaylists_no));
 
   if (lpl->prox == NULL) {
@@ -72,7 +72,7 @@ void insertOnPLaylistHead(musica_no *ll, int *playlistId, lplaylists_no *lpl) {
   printf("Digite o nome da playlist: ");
   scanf("%s", newPlaylist->nome);
   fflush(stdin);
-  lpl->prox->id = (*playlistId)++;
+  lpl->prox->id = playlistId;
   newPlaylist->musicas = makePlaylist(ll);
 }
 
@@ -86,6 +86,7 @@ void printPlaylistMusics(lplaylists_no *p) {
     p = p->prox;
   }
 
+//   Tem bug aqui! quando é a ultima playlist ele n printa
   if (p->prox == NULL) {
     printf("Playlist não encontrada.\n");
     return;
@@ -137,8 +138,6 @@ void removeMusicFromPLaylists(lplaylists_no *lpl) {
 }
 
 void shuffle(playlist_no *playlistNo) {
-  playlist_no *head = playlistNo;
-  playlist_no *temp = playlistNo->prox; // first song
 
   int playListSize = playlistNoSize(playlistNo);
 
@@ -172,23 +171,22 @@ int playlistNoSize(playlist_no *list) {
 void shuffleTwo(playlist_no *playll, int a, int b) {
   playlist_no *head = playll;
 
+  playlist_no *ant1 = head;
   playlist_no *n1 = head->prox;
+  playlist_no *ant2 = head;
   playlist_no *n2 = head->prox;
 
   // get first
-  playlist_no *ant1 = head;
   for (int i = 0; i < a; ++i) {
     ant1 = ant1->prox;
-    head = head->prox;
+    n1 = n1->prox;
   }
 
   // get second
-  playlist_no *ant2 = head;
   for (int i = 0; i < b; ++i) {
     ant2 = ant2->prox;
-    head = head->prox;
+    n2 = n2->prox;
   }
-
 
   // change pos
   playlist_no *temp = n1->prox;

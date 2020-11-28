@@ -11,7 +11,7 @@ int main() {
   struct lplaylists_no *playlistsll = malloc(sizeof(lplaylists_no));
 
   Pll->prox = Pll;
-  playlistsll->id = -1;
+//  playlistsll->id = -1;
 
   int musicId = 0;
   int idMusicToAddPlaylist = 0;
@@ -44,7 +44,8 @@ int main() {
         switch (optionPlaylist) {
           case 1:
             printf("CRIAR NOVA PLAYLIST\n");
-            insertOnPLaylistHead(ll, pPlaylistId, playlistsll);
+            insertOnPLaylistHead(ll, idMusicToAddPlaylist, playlistsll);
+            idMusicToAddPlaylist++;
             break;
           case 2:
             // TODO

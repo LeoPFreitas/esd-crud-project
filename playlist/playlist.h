@@ -29,7 +29,7 @@ playlist_no *makePlaylist(musica *ll);
 
 void printPlaylistMusics(lplaylists_no *p);
 
-void insertOnPLaylistHead(musica_no *ll, int *playlistId, lplaylists_no *lpl);
+void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl);
 
 void removeMusicFromPLaylists(lplaylists_no *lpl);
 
