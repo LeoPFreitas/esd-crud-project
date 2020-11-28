@@ -21,7 +21,7 @@ typedef struct lplaylists_no {
     struct lplaylists_no *prox;
 } lplaylists_no;
 
-playlist_no* makePlaylistNo();
+playlist_no *makePlaylistNo();
 
 void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist);
 
@@ -33,4 +33,9 @@ void insertOnPLaylistHead(musica_no *ll, int *playlistId, lplaylists_no *lpl);
 
 void removeMusicFromPLaylists(lplaylists_no *lpl);
 
+void shuffle(playlist_no *playlistNo);
+
+int playlistNoSize(playlist_no *list);
+
+void shuffleTwo(playlist_no *playll, int a, int b);
 #endif //PROJECT1_PLAYLIST_H
