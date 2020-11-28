@@ -86,7 +86,7 @@ void printPlaylistMusics(lplaylists_no *p) {
     p = p->prox;
   }
 
-//   Tem bug aqui! quando é a ultima playlist ele n printa
+  //todo Tem bug aqui! quando é a ultima playlist ele n printa
   if (p->prox == NULL) {
     printf("Playlist não encontrada.\n");
     return;
@@ -146,6 +146,7 @@ void shuffle(playlist_no *playlistNo) {
     return;
   }
 
+  //todo passa o restande das posições para trocar
   shuffleTwo(playlistNo, 1, 3);
   shuffleTwo(playlistNo, 2, 4);
 
