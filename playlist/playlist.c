@@ -75,6 +75,7 @@ void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
 
   struct lplaylists_no *newPlaylist = malloc(sizeof(lplaylists_no));
 
+
   if (lpl->prox == NULL) {
     lpl->prox = newPlaylist;
   } else {
@@ -91,27 +92,40 @@ void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
   newPlaylist->musicas = makePlaylist(ll);
 }
 
+/*  Função: Printa a playlist escolhida
+*  Params: Ponteiro para lista de playlist
+*  Return: void
+*/
 void printPlaylistMusics(lplaylists_no *p) {
-  /*  Função: Printa a playlist escolhida
-   *  Params: Ponteiro para lista de playlist
-   *  Return: void
-   */
-
   int id;
   printf("Digite o id da playlist: ");
   scanf("%d", &id);
 
-  while (p->prox != NULL && p->id != id) {
-    p = p->prox;
-  }
-
-  //todo Tem bug aqui! quando é a ultima playlist ele n printa
+  // check if there is playlist
   if (p->prox == NULL) {
     printf("Playlist não encontrada.\n");
     return;
   }
 
-  playlist_no *head = p->prox->musicas;
+  int size = playlistLinkedListSize(p);
+
+  while (p->prox != NULL && p->id != id) {
+    p = p->prox;
+
+    // find here
+    if (p->id == id) {
+      break;
+    }
+    size--;
+  }
+
+  // Not found
+  if (p->prox == NULL && size == 0) {
+    printf("Playlist não encontrada.\n");
+    return;
+  }
+
+  playlist_no *head = p->musicas;
   if (head->prox == head)
     printf("\nList is Empty!!!");
   else {
@@ -125,7 +139,7 @@ void printPlaylistMusics(lplaylists_no *p) {
   }
 }
 
-void removeMusicFromPLaylists(lplaylists_no *lpl) {
+void removeMusicFromPlaylists(lplaylists_no *lpl) {
 
   int musicId;
   printf("Digite o ID da musica: ");
@@ -173,6 +187,21 @@ void shuffle(playlist_no *playlistNo) {
   shuffleTwo(playlistNo, 1, 3);
   shuffleTwo(playlistNo, 2, 4);
 
+}
+
+int playlistLinkedListSize(lplaylists_no *lplaylistsNo) {
+  int size = 0;
+
+  if (lplaylistsNo->prox == NULL) {
+    return 0;
+  }
+
+  while (lplaylistsNo->prox != NULL) {
+    size++;
+    lplaylistsNo = lplaylistsNo->prox;
+  }
+
+  return size;
 }
 
 int playlistNoSize(playlist_no *list) {

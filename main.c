@@ -9,8 +9,10 @@ int main() {
   struct musica_no *ll = malloc(sizeof(musica_no));
   // No cabeça da struct de playlist
   struct playlist_no *Pll = malloc(sizeof(playlist_no));
-  // No cabeça da struct dde playlists
+  // No cabeça da struct de playlists
   struct lplaylists_no *playlistsll = malloc(sizeof(lplaylists_no));
+  playlistsll->id = -1;
+  playlistsll->prox = NULL;
 
   Pll->prox = Pll;
 //  playlistsll->id = -1;
@@ -61,7 +63,7 @@ int main() {
           case 4:
             // TODO
             printf("REMOVER MÚSICA DE TODAS AS PLAYLIST\n");
-            removeMusicFromPLaylists(playlistsll);
+            removeMusicFromPlaylists(playlistsll);
             break;
           case 0:
             // TODO
