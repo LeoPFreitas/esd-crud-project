@@ -5,9 +5,11 @@
 
 int main() {
 
-  // create linked list with null head
+  // No cabeça da struct de musicas
   struct musica_no *ll = malloc(sizeof(musica_no));
+  // No cabeça da struct de playlist
   struct playlist_no *Pll = malloc(sizeof(playlist_no));
+  // No cabeça da struct dde playlists
   struct lplaylists_no *playlistsll = malloc(sizeof(lplaylists_no));
 
   Pll->prox = Pll;

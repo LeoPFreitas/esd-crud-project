@@ -8,6 +8,11 @@
 #include "../playlist/playlist.h"
 
 void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
+  /*  Função: Enserir nova música na playlist
+   *  Params: Ponteiro para lista de músicas, INT id das músicas, Ponteiro da playlist
+   *  Return: void
+   */
+
   // TODO extract to validation method (isMusicValid)
   musica_no *nodeMusic = ll->prox;
   while (nodeMusic->musica->id != musicId) {
@@ -33,6 +38,11 @@ void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
 }
 
 playlist_no *makePlaylist(musica *ll) {
+  /*  Função: Criar uma nova playlist
+   *  Params: Ponteiro da lista de músicas
+   *  Return: Ponteiro da playlist criada
+   */
+
   int size = 0;
 
   printf("Digite o tamanho da playlist: ");
@@ -58,6 +68,11 @@ playlist_no *makePlaylist(musica *ll) {
 }
 
 void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
+  /*  Função: Inserie playlist na lista de playlists
+   *  Params: Ponteiro de lista de músicas, INT playlistId, ponteiro para lista de playlist
+   *  Return: void
+   */
+
   struct lplaylists_no *newPlaylist = malloc(sizeof(lplaylists_no));
 
   if (lpl->prox == NULL) {
@@ -77,6 +92,10 @@ void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
 }
 
 void printPlaylistMusics(lplaylists_no *p) {
+  /*  Função: Printa a playlist escolhida
+   *  Params: Ponteiro para lista de playlist
+   *  Return: void
+   */
 
   int id;
   printf("Digite o id da playlist: ");
@@ -138,6 +157,10 @@ void removeMusicFromPLaylists(lplaylists_no *lpl) {
 }
 
 void shuffle(playlist_no *playlistNo) {
+  /*  Função: Troca a ordem das músicas de lugar
+   *  Params: Ponteiro para a playlist
+   *  Return: void
+   */
 
   int playListSize = playlistNoSize(playlistNo);
 
@@ -170,6 +193,10 @@ int playlistNoSize(playlist_no *list) {
 }
 
 void shuffleTwo(playlist_no *playll, int a, int b) {
+  /*  Função: Troca de posição a musica na posição A com a musica da posição B
+   *  Params: Ponteiro da playlist, int posiçãoA, int posiçãoB
+   *  Return: void
+   */
   playlist_no *head = playll;
 
   playlist_no *ant1 = head;

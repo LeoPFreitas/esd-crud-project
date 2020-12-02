@@ -8,6 +8,11 @@
 #include "music.h"
 
 musica *createMusicNode(int *musicId) {
+  /*  Função: cria uma nova música
+   *  Params: Ponteiro para Int ID das músicas
+   *  Return: uma nova música
+   */
+
     struct musica *newMusic = malloc(sizeof(struct musica));
 
     fflush(stdin);
@@ -34,6 +39,11 @@ musica *createMusicNode(int *musicId) {
 }
 
 void insertOnHead(musica_no *ll, int *musicId) {
+  /*  Função: Inseri uma música na struct de musicas
+   *  Params: Ponteiro para lista de músicas e Ponteiro de de INT do ID da música
+   *  Return: void
+   */
+
     struct musica_no *newMusicNode = malloc(sizeof(struct musica));
 
     struct musica *newMusic = createMusicNode(musicId);
@@ -49,6 +59,11 @@ void insertOnHead(musica_no *ll, int *musicId) {
 }
 
 void *convertHHMMSSAndPrint(musica_no *musicaNo) {
+  /*  Função: Printa o tempo de uma música em HH:MM:SS
+   *  Params: Ponteiro para música
+   *  Return: void
+   */
+
     int sec, h, m, s;
 
     h = (musicaNo->musica->duracao) / 3600;
@@ -59,6 +74,11 @@ void *convertHHMMSSAndPrint(musica_no *musicaNo) {
 }
 
 void listAndPrintLL(musica_no *ll) {
+  /*  Função: Printa todas as músicas dentro da lista de músicas
+   *  Params: Ponteiro para lista de músicas
+   *  Return: void
+   */
+
     while (ll->prox != NULL) {
         printf("ID: %d TITULO: %s ARTISTAl: %s ALBUM: %s DURACAO: ", ll->prox->musica->id, ll->prox->musica->titulo,
                ll->prox->musica->artista, ll->prox->musica->album);
@@ -77,6 +97,11 @@ int isMusicLinkedListEmpty(musica_no *ll) {
 }
 
 void makePrincipalMenu() {
+  /*  Função: Printa o menu principal
+   *  Params: void
+   *  Return: void
+   */
+
     printf("-------------------------------------------------------------------------------------------------------------\n");
     printf("|                                               MENU PINCIPAL                                                |\n");
     printf("-------------------------------------------------------------------------------------------------------------\n");
@@ -88,6 +113,11 @@ void makePrincipalMenu() {
 }
 
 void makePlaylistMenu() {
+  /*  Função: Printa o menu de playlist
+   *  Params: void
+   *  Return: void
+   */
+
     printf("-------------------------------------------------------------------------------------------------------------\n");
     printf("|                                                MENU PLAYLIST                                               |\n");
     printf("-------------------------------------------------------------------------------------------------------------\n");
