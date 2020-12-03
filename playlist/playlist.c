@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "../mymusic/music.h"
 #include "../playlist/playlist.h"
 
@@ -129,11 +130,12 @@ void printPlaylistMusics(lplaylists_no *p) {
   if (head->prox == head)
     printf("\nList is Empty!!!");
   else {
-    playlist_no *temp = head->prox;
+    int size = playlistNoSize(head);
     printf("\nAs músicas da playlist %d são: \n", id);
-    while (temp != head) {
-      printf("MUSICA: %s\n", temp->musica->titulo);
-      temp = temp->prox;
+    while (size > 0) {
+      head = head->prox;
+      printf("MUSICA: %s ID: %d\n", head->musica->titulo, head->musica->id);
+      size--;
     }
     printf("\nFim\n");
   }
@@ -159,7 +161,7 @@ void removeMusicFromPlaylists(lplaylists_no *lpl) {
       playlist_no *aux = temp;
       temp = temp->prox;
       if (temp->musica->id == musicId) {
-        printf("Remover musica ID %d", temp->musica->id);
+        printf("Remover musica ID %d\n", temp->musica->id);
         aux->prox = temp->prox;
         temp->prox = NULL;
         break;
@@ -168,25 +170,6 @@ void removeMusicFromPlaylists(lplaylists_no *lpl) {
     // go to the next playlist
     lpl = lpl->prox;
   }
-}
-
-void shuffle(playlist_no *playlistNo) {
-  /*  Função: Troca a ordem das músicas de lugar
-   *  Params: Ponteiro para a playlist
-   *  Return: void
-   */
-
-  int playListSize = playlistNoSize(playlistNo);
-
-  if (playListSize == 0) {
-    printf("\nLista de musicas vazia.\n");
-    return;
-  }
-
-  //todo passa o restande das posições para trocar
-  shuffleTwo(playlistNo, 1, 3);
-  shuffleTwo(playlistNo, 2, 4);
-
 }
 
 int playlistLinkedListSize(lplaylists_no *lplaylistsNo) {
@@ -221,72 +204,54 @@ int playlistNoSize(playlist_no *list) {
   return size;
 }
 
-void shuffleTwo(playlist_no *playll, int a, int b) {
-  /*  Função: Troca de posição a musica na posição A com a musica da posição B
-   *  Params: Ponteiro da playlist, int posiçãoA, int posiçãoB
-   *  Return: void
-   */
-  playlist_no *head = playll;
+void shuffleTwo(lplaylists_no *lplaylistsNo) {
+  printf("Digite o ID da playlist: ");
+  int id = -1;
+  scanf("%d", &id);
 
-  playlist_no *ant1 = head;
-  playlist_no *n1 = head->prox;
-  playlist_no *ant2 = head;
-  playlist_no *n2 = head->prox;
-
-  // get first
-  for (int i = 0; i < a; ++i) {
-    ant1 = ant1->prox;
-    n1 = n1->prox;
+  int lplSize = playlistLinkedListSize(lplaylistsNo);
+  lplaylists_no *lplNode = lplaylistsNo->prox;
+  while (lplSize > 0) {
+    if (lplNode->id == id) {
+      break;
+    }
+    lplNode = lplNode->prox;
+    lplSize--;
   }
 
-  // get second
-  for (int i = 0; i < b; ++i) {
-    ant2 = ant2->prox;
-    n2 = n2->prox;
+  if (lplSize == 0) {
+    printf("PLaylist não encontrada.\n");
+    return;
   }
 
-  // change pos
-  playlist_no *temp = n1->prox;
 
-  n1->prox = n2->prox;
-  ant1->prox = n2;
+  playlist_no *head = lplNode->musicas;
+  int count = playlistNoSize(head);
 
-  n2->prox = temp;
-  ant2->prox = n1;
+  for (int i = 0; i < count; ++i) {
+    int musicSize = playlistNoSize(head);
+    playlist_no *n1 = head->prox;
+    playlist_no *n2 = head->prox;
+    playlist_no *temp = malloc(sizeof(playlist_no));
+
+
+    int a = (rand() % (musicSize - 1));
+    int b = (rand() % (musicSize - 1));
+
+    // get first
+    for (int i = 0; i < a; ++i) {
+      n1 = n1->prox;
+    }
+
+    // get second
+    for (int i = 0; i < b; ++i) {
+      n2 = n2->prox;
+    }
+
+    temp->musica = n1->musica;
+    n1->musica = n2->musica;
+    n2->musica = temp->musica;
+  }
+
 
 }
-
-//void deleteNode(struct Node **head_ref, int position)
-//{
-//    // If linked list is empty
-//    if (*head_ref == NULL)
-//        return;
-//
-//    // Store head node
-//    struct Node* temp = *head_ref;
-//
-//    // If head needs to be removed
-//    if (position == 0)
-//    {
-//        *head_ref = temp->next;   // Change head
-//        free(temp);               // free old head
-//        return;
-//    }
-//
-//    // Find previous node of the node to be deleted
-//    for (int i=0; temp!=NULL && i<position-1; i++)
-//        temp = temp->next;
-//
-//    // If position is more than number of nodes
-//    if (temp == NULL || temp->next == NULL)
-//        return;
-//
-//    // Node temp->next is the node to be deleted
-//    // Store pointer to the next of node to be deleted
-//    struct Node *next = temp->next->next;
-//
-//    // Unlink the node from linked list
-//    free(temp->next);  // Free memory
-//
-//    temp->next = next;  // Unlink the deleted node from list
-//}

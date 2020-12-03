@@ -4,7 +4,6 @@
 #include "playlist/playlist.h"
 
 int main() {
-
   // No cabeça da struct de musicas
   struct musica_no *ll = malloc(sizeof(musica_no));
   // No cabeça da struct de playlist
@@ -53,8 +52,8 @@ int main() {
             break;
           case 2:
             // TODO
-            printf("SHUFFLE PLAYLIST\n");
-            shuffle(playlistsll->prox->musicas);
+            printf("SHUFFLE PLAYLIST:\n");
+            shuffleTwo(playlistsll);
             break;
           case 3:
             printf("IMPRIME PLAYLIST\n");

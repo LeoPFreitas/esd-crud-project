@@ -33,11 +33,11 @@ void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl);
 
 void removeMusicFromPlaylists(lplaylists_no *lpl);
 
-void shuffle(playlist_no *playlistNo);
 
 int playlistNoSize(playlist_no *list);
 
-void shuffleTwo(playlist_no *playll, int a, int b);
+void shuffleTwo(lplaylists_no *lplaylistsNo);
 
 int playlistLinkedListSize(lplaylists_no *lplaylistsNo);
+
 #endif //PROJECT1_PLAYLIST_H
