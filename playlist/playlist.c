@@ -68,11 +68,12 @@ playlist_no *makePlaylist(musica *ll) {
   return playlistNo;
 }
 
+/*  Função: Inserie playlist na lista de playlists
+ *  Params: Ponteiro de lista de músicas, INT playlistId, ponteiro para lista de playlist
+ *  Return: void
+ */
 void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
-  /*  Função: Inserie playlist na lista de playlists
-   *  Params: Ponteiro de lista de músicas, INT playlistId, ponteiro para lista de playlist
-   *  Return: void
-   */
+
 
   struct lplaylists_no *newPlaylist = malloc(sizeof(lplaylists_no));
 
@@ -110,7 +111,7 @@ void printPlaylistMusics(lplaylists_no *p) {
 
   int size = playlistLinkedListSize(p);
 
-  while (p->prox != NULL && p->id != id) {
+  while (size > 0) {
     p = p->prox;
 
     // find here
@@ -128,7 +129,7 @@ void printPlaylistMusics(lplaylists_no *p) {
 
   playlist_no *head = p->musicas;
   if (head->prox == head)
-    printf("\nList is Empty!!!");
+    printf("\nList is Empty!!!\n");
   else {
     int size = playlistNoSize(head);
     printf("\nAs músicas da playlist %d são: \n", id);
