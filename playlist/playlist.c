@@ -165,7 +165,8 @@ void removeMusicFromPlaylists(lplaylists_no *lpl) {
       if (temp->musica->id == musicId) {
         printf("Remover musica ID %d\n", temp->musica->id);
         aux->prox = temp->prox;
-        temp->prox = NULL;
+//        temp->prox = NULL;
+        free(temp);
         break;
       }
     }
@@ -249,7 +250,7 @@ void shufflePlaylist(lplaylists_no *lplaylistsNo) {
     int musicSize = playlistNoSize(head);
     playlist_no *n1 = head->prox;
     playlist_no *n2 = head->prox;
-    playlist_no *temp = malloc(sizeof(playlist_no));
+    musica *temp;
 
 
     int a = (rand() % (musicSize - 1));
@@ -265,8 +266,8 @@ void shufflePlaylist(lplaylists_no *lplaylistsNo) {
       n2 = n2->prox;
     }
 
-    temp->musica = n1->musica;
+    temp = n1->musica;
     n1->musica = n2->musica;
-    n2->musica = temp->musica;
+    n2->musica = temp;
   }
 }
