@@ -8,16 +8,14 @@
 #include "../mymusic/music.h"
 #include "../playlist/playlist.h"
 
-void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
-  /*  Função: Enserir nova música na playlist
-   *  Params: Ponteiro para lista de músicas, INT id das músicas, Ponteiro da playlist
-   *  Return: void
-   */
 
-  // TODO extract to validation method (isMusicValid)
+/*  Função: Enserir nova música na playlist
+ *  Params: Ponteiro para lista de músicas, INT id das músicas, Ponteiro da playlist
+ *  Return: void
+ */
+void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
   musica_no *nodeMusic = ll->prox;
   while (nodeMusic->musica->id != musicId) {
-    // TODO verificar se id existe
     nodeMusic = nodeMusic->prox;
   }
 
@@ -38,12 +36,12 @@ void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
   }
 }
 
-playlist_no *makePlaylist(musica *ll) {
-  /*  Função: Criar uma nova playlist
-   *  Params: Ponteiro da lista de músicas
-   *  Return: Ponteiro da playlist criada
-   */
 
+/*  Função: Criar uma nova playlist
+ *  Params: Ponteiro da lista de músicas
+ *  Return: Ponteiro da playlist criada
+ */
+playlist_no *makePlaylist(musica *ll) {
   int size = 0;
 
   printf("Digite o tamanho da playlist: ");
@@ -68,15 +66,13 @@ playlist_no *makePlaylist(musica *ll) {
   return playlistNo;
 }
 
+
 /*  Função: Inserie playlist na lista de playlists
  *  Params: Ponteiro de lista de músicas, INT playlistId, ponteiro para lista de playlist
  *  Return: void
  */
 void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
-
-
   struct lplaylists_no *newPlaylist = malloc(sizeof(lplaylists_no));
-
 
   if (lpl->prox == NULL) {
     lpl->prox = newPlaylist;
@@ -94,7 +90,8 @@ void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
   newPlaylist->musicas = makePlaylist(ll);
 }
 
-/*  Função: Printa a playlist escolhida
+
+/* Função: Printa a playlist escolhida
 *  Params: Ponteiro para lista de playlist
 *  Return: void
 */
@@ -142,8 +139,12 @@ void printPlaylistMusics(lplaylists_no *p) {
   }
 }
 
-void removeMusicFromPlaylists(lplaylists_no *lpl) {
 
+/* Função: Remove Musica da playlists.
+*  Params: Ponteiro para lista de playlist
+*  Return: void
+*/
+void removeMusicFromPlaylists(lplaylists_no *lpl) {
   int musicId;
   printf("Digite o ID da musica: ");
   scanf("%d", &musicId);
@@ -173,6 +174,11 @@ void removeMusicFromPlaylists(lplaylists_no *lpl) {
   }
 }
 
+
+/* Função: Retorna o tamanho da lista de playlists.
+*  Params: Ponteiro para lista de playlist
+*  Return: void
+*/
 int playlistLinkedListSize(lplaylists_no *lplaylistsNo) {
   int size = 0;
 
@@ -188,6 +194,11 @@ int playlistLinkedListSize(lplaylists_no *lplaylistsNo) {
   return size;
 }
 
+
+/* Função: Retorna o tamanho da lista de playlist.
+*  Params: Ponteiro para playlist
+*  Return: void
+*/
 int playlistNoSize(playlist_no *list) {
   int size = 0;
 
@@ -205,7 +216,12 @@ int playlistNoSize(playlist_no *list) {
   return size;
 }
 
-void shuffleTwo(lplaylists_no *lplaylistsNo) {
+
+/* Função: Shuffle Playlist.
+*  Params: Ponteiro para lista de playlist
+*  Return: void
+*/
+void shufflePlaylist(lplaylists_no *lplaylistsNo) {
   printf("Digite o ID da playlist: ");
   int id = -1;
   scanf("%d", &id);
@@ -253,6 +269,4 @@ void shuffleTwo(lplaylists_no *lplaylistsNo) {
     n1->musica = n2->musica;
     n2->musica = temp->musica;
   }
-
-
 }

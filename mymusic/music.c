@@ -7,12 +7,12 @@
 #include "strings.h"
 #include "music.h"
 
-musica *createMusicNode(int *musicId) {
-  /*  Função: cria uma nova música
-   *  Params: Ponteiro para Int ID das músicas
-   *  Return: uma nova música
-   */
 
+/*  Função: cria uma nova música
+ *  Params: Ponteiro para Int ID das músicas
+ *  Return: uma nova música
+ */
+musica *createMusicNode(int *musicId) {
     struct musica *newMusic = malloc(sizeof(struct musica));
 
     fflush(stdin);
@@ -38,12 +38,12 @@ musica *createMusicNode(int *musicId) {
     return newMusic;
 }
 
-void insertOnHead(musica_no *ll, int *musicId) {
-  /*  Função: Inseri uma música na struct de musicas
-   *  Params: Ponteiro para lista de músicas e Ponteiro de de INT do ID da música
-   *  Return: void
-   */
 
+/* Função: Inseri uma música na struct de musicas
+*  Params: Ponteiro para lista de músicas e Ponteiro de de INT do ID da música
+*  Return: void
+*/
+void insertOnHead(musica_no *ll, int *musicId) {
     struct musica_no *newMusicNode = malloc(sizeof(struct musica));
 
     struct musica *newMusic = createMusicNode(musicId);
@@ -58,12 +58,12 @@ void insertOnHead(musica_no *ll, int *musicId) {
     ll->prox = newMusicNode;
 }
 
-void *convertHHMMSSAndPrint(musica_no *musicaNo) {
-  /*  Função: Printa o tempo de uma música em HH:MM:SS
-   *  Params: Ponteiro para música
-   *  Return: void
-   */
 
+/*  Função: Printa o tempo de uma música em HH:MM:SS
+ *  Params: Ponteiro para música
+ *  Return: void
+ */
+void *convertHHMMSSAndPrint(musica_no *musicaNo) {
     int sec, h, m, s;
 
     h = (musicaNo->musica->duracao) / 3600;
@@ -73,12 +73,12 @@ void *convertHHMMSSAndPrint(musica_no *musicaNo) {
     printf("%d:%d:%d\n", h, m, s);
 }
 
-void listAndPrintLL(musica_no *ll) {
-  /*  Função: Printa todas as músicas dentro da lista de músicas
-   *  Params: Ponteiro para lista de músicas
-   *  Return: void
-   */
 
+/*  Função: Printa todas as músicas dentro da lista de músicas
+ *  Params: Ponteiro para lista de músicas
+ *  Return: void
+ */
+void listAndPrintLL(musica_no *ll) {
     while (ll->prox != NULL) {
         printf("ID: %d TITULO: %s ARTISTAl: %s ALBUM: %s DURACAO: ", ll->prox->musica->id, ll->prox->musica->titulo,
                ll->prox->musica->artista, ll->prox->musica->album);
@@ -88,7 +88,6 @@ void listAndPrintLL(musica_no *ll) {
 }
 
 
-// TODO implement nullable check function
 int isMusicLinkedListEmpty(musica_no *ll) {
     if (ll->prox != NULL) {
         return 1;
@@ -96,12 +95,12 @@ int isMusicLinkedListEmpty(musica_no *ll) {
     return 0;
 }
 
-void makePrincipalMenu() {
-  /*  Função: Printa o menu principal
-   *  Params: void
-   *  Return: void
-   */
 
+/*  Função: Printa o menu principal
+ *  Params: void
+ *  Return: void
+ */
+void makePrincipalMenu() {
     printf("-------------------------------------------------------------------------------------------------------------\n");
     printf("|                                               MENU PINCIPAL                                                |\n");
     printf("-------------------------------------------------------------------------------------------------------------\n");
@@ -112,12 +111,12 @@ void makePrincipalMenu() {
     printf("-------------------------------------------------------------------------------------------------------------\n");
 }
 
-void makePlaylistMenu() {
-  /*  Função: Printa o menu de playlist
-   *  Params: void
-   *  Return: void
-   */
 
+/*  Função: Printa o menu de playlist
+ *  Params: void
+ *  Return: void
+ */
+void makePlaylistMenu() {
     printf("-------------------------------------------------------------------------------------------------------------\n");
     printf("|                                                MENU PLAYLIST                                               |\n");
     printf("-------------------------------------------------------------------------------------------------------------\n");

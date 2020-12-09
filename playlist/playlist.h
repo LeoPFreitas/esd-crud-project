@@ -36,7 +36,7 @@ void removeMusicFromPlaylists(lplaylists_no *lpl);
 
 int playlistNoSize(playlist_no *list);
 
-void shuffleTwo(lplaylists_no *lplaylistsNo);
+void shufflePlaylist(lplaylists_no *lplaylistsNo);
 
 int playlistLinkedListSize(lplaylists_no *lplaylistsNo);
 

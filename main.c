@@ -14,7 +14,6 @@ int main() {
   playlistsll->prox = NULL;
 
   Pll->prox = Pll;
-//  playlistsll->id = -1;
 
   int musicId = 0;
   int idMusicToAddPlaylist = 0;
@@ -53,7 +52,7 @@ int main() {
           case 2:
             // TODO
             printf("SHUFFLE PLAYLIST:\n");
-            shuffleTwo(playlistsll);
+            shufflePlaylist(playlistsll);
             break;
           case 3:
             printf("IMPRIME PLAYLIST\n");
