@@ -6,6 +6,7 @@
 #define PROJECT1_MUSIC_H
 
 #include <stdbool.h>
+#include "../ADT/treeAVL.h"
 
 typedef struct musica {
     int id;
@@ -21,6 +22,8 @@ typedef struct musica_no {
     struct musica_no *ant;
     struct musica_no *prox;
 } musica_no;
+
+void insertOnTree(struct treeAVLNode **arvAvl, int *musicId);
 
 musica *createMusicNode(int *musicId);
 

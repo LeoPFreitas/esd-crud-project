@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include "mymusic/music.h"
 #include "playlist/playlist.h"
+#include "ADT/treeAVL.h"
 
 int main() {
-  // No cabeça da struct de musicas
-  struct musica_no *ll = malloc(sizeof(musica_no));
+  // create a void tree avl and assign a pointer to it
+  ArvAVL *arvAVL = createTreeAVL();
+
   // No cabeça da struct de playlist
   struct playlist_no *Pll = malloc(sizeof(playlist_no));
   // No cabeça da struct de playlists
@@ -32,7 +34,7 @@ int main() {
     switch (optionSelected) {
       case 1:
         printf("CADASTRAR NOVA MÚSICA \n");
-        insertOnHead(ll, pMusicId);
+        insertOnTree(arvAVL, pMusicId);
         break;
       case 2:
         printf("IMPRIMIR TODAS AS MÚSICAS\n");

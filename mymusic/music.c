@@ -58,6 +58,12 @@ void insertOnHead(musica_no *ll, int *musicId) {
     ll->prox = newMusicNode;
 }
 
+void insertOnTree(struct treeAVLNode **arvAvl, int *musicId) {
+  musica *newMusic = createMusicNode(musicId);
+
+  insere_ArvAVL(arvAvl, newMusic);
+}
+
 
 /*  Função: Printa o tempo de uma música em HH:MM:SS
  *  Params: Ponteiro para música
