@@ -64,13 +64,13 @@ void *convertHHMMSSAndPrint(musica_no *musicaNo) {
  *  Params: Ponteiro para lista de músicas
  *  Return: void
  */
-void listAndPrintLL(musica_no *ll) {
-    while (ll->prox != NULL) {
-        printf("ID: %d TITULO: %s ARTISTAl: %s ALBUM: %s DURACAO: ", ll->prox->musica->id, ll->prox->musica->titulo,
-               ll->prox->musica->artista, ll->prox->musica->album);
-        convertHHMMSSAndPrint(ll->prox);
-        ll = ll->prox;
-    }
+void printAllMusics(struct treeAVLNode **arvAvl) {
+  if (!isTreeAVLEmpty(arvAvl)) {
+    printf("\n\nLista de Musicas: \n");
+    emOrdem_ArvAVL(arvAvl);
+  } else {
+    printf("Lista de muscia vazia\n");
+  }
 }
 
 

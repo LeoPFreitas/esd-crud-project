@@ -27,9 +27,7 @@ void insertOnTree(struct treeAVLNode **arvAvl, int *musicId);
 
 musica *createMusicNode(int *musicId);
 
-void insertOnHead(musica_no *musica, int *musicId);
-
-void listAndPrintLL(musica_no *ll);
+void printAllMusics(struct treeAVLNode **arvAvl);
 
 void *convertHHMMSS(musica *musica);
 

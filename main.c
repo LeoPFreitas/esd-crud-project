@@ -38,7 +38,7 @@ int main() {
         break;
       case 2:
         printf("IMPRIMIR TODAS AS MÚSICAS\n");
-        listAndPrintLL(ll);
+        printAllMusics(arvAVL);
         break;
       case 3:
         makePlaylistMenu();

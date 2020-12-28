@@ -105,8 +105,8 @@ void emOrdem_ArvAVL(ArvAVL *raiz){
     return;
   if(*raiz != NULL){
     emOrdem_ArvAVL(&((*raiz)->esq));
-    //printf("%d\n",(*raiz)->info);
-    printf("No %d: H(%d) fb(%d)\n", (*raiz)->musica->id, getNodeHigh(*raiz), getBalancefactor(*raiz));
+
+    printf("Musica id %d\n", (*raiz)->musica->id);
     emOrdem_ArvAVL(&((*raiz)->dir));
   }
 }
