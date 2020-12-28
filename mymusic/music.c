@@ -38,26 +38,6 @@ musica *createMusicNode(int *musicId) {
     return newMusic;
 }
 
-
-/* Função: Inseri uma música na struct de musicas
-*  Params: Ponteiro para lista de músicas e Ponteiro de de INT do ID da música
-*  Return: void
-*/
-void insertOnHead(musica_no *ll, int *musicId) {
-    struct musica_no *newMusicNode = malloc(sizeof(struct musica));
-
-    struct musica *newMusic = createMusicNode(musicId);
-
-    newMusicNode->musica = newMusic;
-
-    newMusicNode->prox = ll->prox;
-    newMusicNode->ant = ll;
-    if (ll->prox != NULL) {
-        ll->prox->ant = newMusicNode;
-    }
-    ll->prox = newMusicNode;
-}
-
 void insertOnTree(struct treeAVLNode **arvAvl, int *musicId) {
   musica *newMusic = createMusicNode(musicId);
 
