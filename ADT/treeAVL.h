@@ -33,7 +33,7 @@ void emOrdem_ArvAVL(ArvAVL *raiz);
 
 void posOrdem_ArvAVL(ArvAVL *raiz);
 
-int consulta_ArvAVL(ArvAVL *raiz, int valor);
+struct musica *consulta_ArvAVL(ArvAVL *raiz, int valor);
 
 void RotacaoLL(ArvAVL *A);
 

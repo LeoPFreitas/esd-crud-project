@@ -121,20 +121,20 @@ void posOrdem_ArvAVL(ArvAVL *raiz){
   }
 }
 
-int consulta_ArvAVL(ArvAVL *raiz, int valor){
-  if(raiz == NULL)
-    return 0;
-  struct treeAVLNode* atual = *raiz;
-  while(atual != NULL){
-    if(valor == atual->musica->id){
-      return 1;
+struct musica *consulta_ArvAVL(ArvAVL *raiz, int valor) {
+  if (raiz == NULL)
+    return NULL;
+  struct treeAVLNode *atual = *raiz;
+  while (atual != NULL) {
+    if (valor == atual->musica->id) {
+      return atual->musica;
     }
-    if(valor > atual->musica->id)
+    if (valor > atual->musica->id)
       atual = atual->dir;
     else
       atual = atual->esq;
   }
-  return 0;
+  return NULL;
 }
 
 //=================================
