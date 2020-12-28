@@ -219,9 +219,9 @@ int insere_ArvAVL(ArvAVL *raiz, struct musica *musica){
   return res;
 }
 
-struct treeAVLNode* procuraMearvAVLr(struct treeAVLNode* atual){
-  struct treeAVLNode *arvAVL1 = atual;
-  struct treeAVLNode *arvAVL2 = atual->esq;
+ArvAVL procuraMearvAVLr(ArvAVL atual){
+  ArvAVL arvAVL1 = atual;
+  ArvAVL arvAVL2 = atual->esq;
   while(arvAVL2 != NULL){
     arvAVL1 = arvAVL2;
     arvAVL2 = arvAVL2->esq;

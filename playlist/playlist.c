@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 #include "../mymusic/music.h"
 #include "../playlist/playlist.h"
 

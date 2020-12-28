@@ -38,7 +38,7 @@ musica *createMusicNode(int *musicId) {
     return newMusic;
 }
 
-void insertOnTree(struct treeAVLNode **arvAvl, int *musicId) {
+void insertOnTree(ArvAVL *arvAvl, int *musicId) {
   musica *newMusic = createMusicNode(musicId);
 
   insere_ArvAVL(arvAvl, newMusic);
