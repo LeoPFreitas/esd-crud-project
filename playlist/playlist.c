@@ -295,11 +295,65 @@ void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll)
   addMusicsToPlaylist(arvAVL, v, listMusicSize, musicListHead);
 }
 
+lplaylists_no *getDesiredPlaylist(int id, struct lplaylists_no *listOfPlaylistsTemp) {
+  // checa se a lista de playlist tem 1 playlist pelo menos
+  if (listOfPlaylistsTemp->prox == NULL) {
+    printf("Playlist não encontrada.\n");
+    return NULL;
+  }
 
-/* Função: Shuffle Playlist.
-*  Params: Ponteiro para lista de playlist
-*  Return: void
-*/
+  // procura a playlista desejada
+  do {
+    listOfPlaylistsTemp = listOfPlaylistsTemp->prox;
+    if (listOfPlaylistsTemp->id == id) {
+      break;
+    }
+  } while (listOfPlaylistsTemp->prox != NULL);
+
+  // verificar se encontrou ou se saiu NULL
+  if (listOfPlaylistsTemp == NULL) {
+    return NULL;
+  }
+
+  return listOfPlaylistsTemp;
+}
+
+int getPlaylistID() {
+  int id;
+  printf("Digite o id da playlist: ");
+  scanf("%d", &id);
+  return id;
+}
+
+void printPLaylistMusics(struct lplaylists_no *listOfPlaylistsTemp) {
+  playlist_no *temp = listOfPlaylistsTemp->musicas;
+
+  if (temp->prox == NULL) // playlist nao tem musicas
+    printf("\nPLaylist não possui nenhuma musica\n");
+  else {
+    temp = temp->prox;
+    do {
+      printf("MUSICA: %s ID: %d\n", temp->musica->titulo, temp->musica->id);
+      temp = temp->prox;
+    } while (temp->musica != listOfPlaylistsTemp->musicas->prox->musica);
+    printf("\nFim\n");
+  }
+}
+
+void printPLaylist(struct lplaylists_no *playlistsll) {// pegar o id da playlist desejada
+  int id = getPlaylistID();
+
+  // procurar se a playlist existe e retornar ponteiro para ela
+  struct lplaylists_no *listOfPlaylistsTemp = playlistsll;
+  listOfPlaylistsTemp = getDesiredPlaylist(id, listOfPlaylistsTemp);
+
+  if (listOfPlaylistsTemp != NULL) {
+    printPLaylistMusics(listOfPlaylistsTemp);
+  } else {
+    printf("\n\nPLaylist não encontrada!!\n");
+  }
+}
+
 void shufflePlaylist(lplaylists_no *lplaylistsNo) {
   printf("Digite o ID da playlist: ");
   int id = -1;

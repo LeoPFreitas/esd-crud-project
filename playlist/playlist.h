@@ -48,4 +48,12 @@ void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct
 
 void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll);
 
+lplaylists_no *getDesiredPlaylist(int id, struct lplaylists_no *listOfPlaylistsTemp);
+
+int getPlaylistID();
+
+void printPLaylistMusics(struct lplaylists_no *listOfPlaylistsTemp);
+
+void printPLaylist(struct lplaylists_no *playlistsll);
+
 #endif //PROJECT1_PLAYLIST_H

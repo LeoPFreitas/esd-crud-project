@@ -57,7 +57,7 @@ int main() {
             break;
           case 3:
             printf("IMPRIME PLAYLIST\n");
-            printPlaylistMusics(playlistsll);
+            printPLaylist(playlistsll);
             break;
           case 4:
             // TODO
