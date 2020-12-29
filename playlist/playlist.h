@@ -27,8 +27,6 @@ void shuffle(lplaylists_no *lplNode);
 
 void shufflePlaylist(lplaylists_no *lplaylistsNo);
 
-int playlistLinkedListSize(lplaylists_no *lplaylistsNo);
-
 lplaylists_no *createPlaylist(struct lplaylists_no *playlistsll);
 
 void getVectorOfMusics(int **v, int *listMusicSize);

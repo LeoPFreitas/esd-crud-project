@@ -38,38 +38,6 @@ void removeMusicFromPlaylists(lplaylists_no *lpl) {
   }
 }
 
-int playlistLinkedListSize(lplaylists_no *lplaylistsNo) {
-  int size = 0;
-
-  if (lplaylistsNo->prox == NULL) {
-    return 0;
-  }
-
-  while (lplaylistsNo->prox != NULL) {
-    size++;
-    lplaylistsNo = lplaylistsNo->prox;
-  }
-
-  return size;
-}
-
-int playlistNoSize(playlist_no *list) {
-  int size = 0;
-
-  playlist_no *head = list;
-
-  if (list->prox == head) {
-    return 0;
-  }
-
-  while (list->prox != head) {
-    size++;
-    list = list->prox;
-  }
-
-  return size;
-}
-
 lplaylists_no *createPlaylist(struct lplaylists_no *playlistsll) {
   // criar um no de playlist
   struct lplaylists_no *playList = malloc(sizeof(lplaylists_no));
