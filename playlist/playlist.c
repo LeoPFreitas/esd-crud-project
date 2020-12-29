@@ -251,6 +251,8 @@ void getVectorOfMusics(int **v, int *listMusicSize) {
 }
 
 void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct playlist_no *musicListHead) {
+  playlist_no *temp = musicListHead;
+
   for (int j = 0; j < listMusicSize; ++j) {
     int aux = v[j];
 
@@ -262,11 +264,14 @@ void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct
 
     // cria o proximo no de musica
     struct playlist_no *next = malloc(sizeof(playlist_no));
-    musicListHead->prox = next;
+    temp->prox = next;
     next->musica = tempMusicPointer;
 
-    musicListHead = musicListHead->prox;
+    temp = temp->prox;
   }
+
+  temp->prox = musicListHead->prox;
+
 }
 
 void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll) {
