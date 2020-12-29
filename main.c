@@ -8,20 +8,14 @@ int main() {
   // create a void tree avl and assign a pointer to it
   ArvAVL *arvAVL = createTreeAVL();
 
-  // No cabeça da struct de playlist
-  struct playlist_no *Pll = malloc(sizeof(playlist_no));
   // No cabeça da struct de playlists
   struct lplaylists_no *playlistsll = malloc(sizeof(lplaylists_no));
   playlistsll->id = -1;
   playlistsll->prox = NULL;
 
-  Pll->prox = Pll;
-
   int musicId = 0;
-  int idMusicToAddPlaylist = 0;
 
   int *pMusicId = &musicId;
-  int *pPlaylistId = &idMusicToAddPlaylist;
 
   int optionSelected = 0;
   int optionPlaylist = 0;
@@ -65,7 +59,6 @@ int main() {
             removeMusicFromPlaylists(playlistsll);
             break;
           case 0:
-            // TODO
             printf("Voltando para o menu principal..\n");
             break;
           default:
