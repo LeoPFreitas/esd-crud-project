@@ -241,6 +241,11 @@ void getVectorOfMusics(int **v, int *listMusicSize) {
   printf("Digite o tamanho da playlist: ");
   scanf("%d", listMusicSize);
 
+  if (*listMusicSize <= 0) {
+    printf("\nPlaylist criada sem musica!\n");
+    return;
+  }
+
   (*v) = malloc((*listMusicSize) * sizeof(int));
   fflush(stdin);
 
