@@ -7,13 +7,11 @@
 
 #include "../mymusic/music.h"
 
-// Struct Playlist
 typedef struct playlist_no {
     musica *musica;
     struct playlist_no *prox;
 } playlist_no;
 
-// Struct Linked List Playlists
 typedef struct lplaylists_no {
     int id;
     char nome[200];
@@ -23,7 +21,9 @@ typedef struct lplaylists_no {
 
 void removeMusicFromPlaylists(lplaylists_no *lpl);
 
-int playlistNoSize(playlist_no *list);
+int getPlaylistSize(playlist_no *head);
+
+void shuffle(lplaylists_no *lplNode);
 
 void shufflePlaylist(lplaylists_no *lplaylistsNo);
 

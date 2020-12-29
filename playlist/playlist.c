@@ -209,51 +209,53 @@ void printPLaylist(struct lplaylists_no *playlistsll) {// pegar o id da playlist
 }
 
 void shufflePlaylist(lplaylists_no *lplaylistsNo) {
-  printf("Digite o ID da playlist: ");
-  int id = -1;
-  scanf("%d", &id);
 
-  int lplSize = playlistLinkedListSize(lplaylistsNo);
-  lplaylists_no *lplNode = lplaylistsNo->prox;
-  while (lplSize > 0) {
-    if (lplNode->id == id) {
-      break;
-    }
-    lplNode = lplNode->prox;
-    lplSize--;
-  }
+  // pegar id da playlist
+  int id = getPlaylistID();
 
-  if (lplSize == 0) {
-    printf("PLaylist não encontrada.\n");
+  if (id < 0) {
+    printf("Valor invalido\n");
     return;
   }
 
-
-  playlist_no *head = lplNode->musicas;
-  int count = playlistNoSize(head);
-
-  for (int i = 0; i < count; ++i) {
-    int musicSize = playlistNoSize(head);
-    playlist_no *n1 = head->prox;
-    playlist_no *n2 = head->prox;
-    musica *temp;
-
-
-    int a = (rand() % (musicSize - 1));
-    int b = (rand() % (musicSize - 1));
-
-    // get first
-    for (int i = 0; i < a; ++i) {
-      n1 = n1->prox;
-    }
-
-    // get second
-    for (int i = 0; i < b; ++i) {
-      n2 = n2->prox;
-    }
-
-    temp = n1->musica;
-    n1->musica = n2->musica;
-    n2->musica = temp;
+  lplaylists_no *lplNode = getDesiredPlaylist(id, lplaylistsNo);
+  if (lplNode == NULL) {
+    printf("PLaylist não encontrada\n");
+    return;
   }
+
+  shuffle(lplNode);
+}
+
+int getPlaylistSize(playlist_no *head) {
+  int c = 0;
+  playlist_no *temp = head->prox;
+
+  do {
+    c++;
+    temp = temp->prox;
+  } while (temp != head->prox);
+  return c;
+}
+
+void shuffle(lplaylists_no *lplNode) {
+  int aux;
+  int musicSize = getPlaylistSize(lplNode->musicas);
+
+  playlist_no *pPlaylistNo = lplNode->musicas->prox;
+
+  do {
+    aux = (rand() % (musicSize - 1));
+
+    playlist_no *pPLaylistNoAux = lplNode->musicas->prox;
+    for (int i = 0; i < aux; ++i) {
+      pPLaylistNoAux = pPLaylistNoAux->prox;
+    }
+
+    musica *musicaTemp = pPlaylistNo->musica;
+    pPlaylistNo->musica = pPLaylistNoAux->musica;
+    pPLaylistNoAux->musica = musicaTemp;
+
+    pPlaylistNo = pPlaylistNo->prox;
+  } while (pPlaylistNo != lplNode->musicas->prox);
 }
