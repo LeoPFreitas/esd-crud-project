@@ -48,8 +48,7 @@ int main() {
         switch (optionPlaylist) {
           case 1:
             printf("CRIAR NOVA PLAYLIST\n");
-            insertOnPLaylistHead(ll, idMusicToAddPlaylist, playlistsll);
-            idMusicToAddPlaylist++;
+            createPlaylistWithMusics(arvAVL, playlistsll);
             break;
           case 2:
             // TODO

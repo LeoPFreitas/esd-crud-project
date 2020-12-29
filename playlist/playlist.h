@@ -40,4 +40,12 @@ void shufflePlaylist(lplaylists_no *lplaylistsNo);
 
 int playlistLinkedListSize(lplaylists_no *lplaylistsNo);
 
+lplaylists_no *createPlaylist(struct lplaylists_no *playlistsll);
+
+void getVectorOfMusics(int **v, int *listMusicSize);
+
+void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct playlist_no *musicListHead);
+
+void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll);
+
 #endif //PROJECT1_PLAYLIST_H

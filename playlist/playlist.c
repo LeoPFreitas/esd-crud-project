@@ -216,6 +216,75 @@ int playlistNoSize(playlist_no *list) {
   return size;
 }
 
+lplaylists_no *createPlaylist(struct lplaylists_no *playlistsll) {
+  // criar um no de playlist
+  struct lplaylists_no *playList = malloc(sizeof(lplaylists_no));
+
+  // Pega o nome da playlist
+  printf("Digite o nome da playlist: ");
+  scanf("%s", playList->nome);
+  fflush(stdin);
+
+  // buscar o local correto de insercao na lista de playlists e incrementar id;
+  lplaylists_no *p = playlistsll;
+  while (p->prox != NULL) {
+    p = p->prox;
+  }
+  p->prox = playList;
+  p->prox->id = p->id + 1;
+
+  return playList;
+}
+
+void getVectorOfMusics(int **v, int *listMusicSize) {
+  (*listMusicSize) = 0;
+  printf("Digite o tamanho da playlist: ");
+  scanf("%d", listMusicSize);
+
+  (*v) = malloc((*listMusicSize) * sizeof(int));
+  fflush(stdin);
+
+  printf("Digite os id das musicas separadas por espaco: ");
+  for (int j = 0; j < (*listMusicSize); ++j) {
+    scanf("%d", &(*v)[j]);
+  }
+}
+
+void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct playlist_no *musicListHead) {
+  for (int j = 0; j < listMusicSize; ++j) {
+    int aux = v[j];
+
+    // buscar na arvore a musica
+    struct musica *tempMusicPointer = consulta_ArvAVL(arvAVL, aux);
+    if (tempMusicPointer == NULL) {
+      printf("Null");
+    }
+
+    // cria o proximo no de musica
+    struct playlist_no *next = malloc(sizeof(playlist_no));
+    musicListHead->prox = next;
+    next->musica = tempMusicPointer;
+
+    musicListHead = musicListHead->prox;
+  }
+}
+
+void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll) {
+  lplaylists_no *playList = createPlaylist(playlistsll);
+
+  // atribui lista de musicas à playlist
+  playList->musicas = malloc(sizeof(playlist_no));
+
+  // Pegar lista de musicas que o cara quer
+  int *v;
+  int listMusicSize;
+  getVectorOfMusics(&v, &listMusicSize);
+
+  struct playlist_no *musicListHead = playList->musicas;
+
+  addMusicsToPlaylist(arvAVL, v, listMusicSize, musicListHead);
+}
+
 
 /* Função: Shuffle Playlist.
 *  Params: Ponteiro para lista de playlist
