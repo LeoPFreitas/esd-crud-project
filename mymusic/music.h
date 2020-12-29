@@ -16,22 +16,11 @@ typedef struct musica {
     int duracao; //segundos
 } musica;
 
-
-typedef struct musica_no {
-    musica *musica;
-    struct musica_no *ant;
-    struct musica_no *prox;
-} musica_no;
-
 void insertOnTree(struct treeAVLNode **arvAvl, int *musicId);
 
 musica *createMusicNode(int *musicId);
 
 void printAllMusics(struct treeAVLNode **arvAvl);
-
-void *convertHHMMSS(musica *musica);
-
-int isMusicLinkedListEmpty(musica_no *ll);
 
 void makePrincipalMenu();
 
