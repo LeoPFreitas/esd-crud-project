@@ -19,7 +19,7 @@ typedef struct lplaylists_no {
     struct lplaylists_no *prox;
 } lplaylists_no;
 
-void removeMusicFromPlaylists(lplaylists_no *lpl);
+void removeMusicFromPlaylists(lplaylists_no *lpl, ArvAVL *root);
 
 int getPlaylistSize(playlist_no *head);
 

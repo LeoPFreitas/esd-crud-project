@@ -63,7 +63,8 @@ void makePrincipalMenu() {
   printf("-------------------------------------------------------------------------------------------------------------\n");
   printf("1 - Cadastrar nova música\n");
   printf("2 - Imprime todas as músicas da lista\n");
-  printf("3 - Playlists\n");
+  printf("3 - Remover musica\n");
+  printf("4 - Playlists\n");
   printf("0 - Sair do programa\n");
   printf("-------------------------------------------------------------------------------------------------------------\n");
 }
@@ -75,7 +76,6 @@ void makePlaylistMenu() {
   printf("1 - Criar nova Playlist\n");
   printf("2 - Shuffle Playlist\n");
   printf("3 - Imprime Playlist\n");
-  printf("4 - Remover música de todas as Playlist\n");
   printf("0 - Voltar para o Menu Principal\n");
   printf("-------------------------------------------------------------------------------------------------------------\n");
 }

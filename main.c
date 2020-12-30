@@ -35,6 +35,10 @@ int main() {
         printAllMusics(arvAVL);
         break;
       case 3:
+        printf("REMOVER MÚSICA\n");
+        removeMusicFromPlaylists(playlistsll, arvAVL);
+        break;
+      case 4:
         makePlaylistMenu();
         printf("Selecione uma opção: \n");
         fflush(stdin);
@@ -52,11 +56,6 @@ int main() {
           case 3:
             printf("IMPRIME PLAYLIST\n");
             printPLaylist(playlistsll);
-            break;
-          case 4:
-            // TODO
-            printf("REMOVER MÚSICA DE TODAS AS PLAYLIST\n");
-            removeMusicFromPlaylists(playlistsll);
             break;
           case 0:
             printf("Voltando para o menu principal..\n");

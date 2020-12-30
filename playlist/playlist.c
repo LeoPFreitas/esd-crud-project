@@ -7,35 +7,63 @@
 #include "../mymusic/music.h"
 #include "../playlist/playlist.h"
 
-void removeMusicFromPlaylists(lplaylists_no *lpl) {
+void removeMusicFromPlaylists(lplaylists_no *lpl, ArvAVL *root) {
   int musicId;
   printf("Digite o ID da musica: ");
   scanf("%d", &musicId);
 
-  // loop through playlists
-  while (lpl->prox != NULL) {
+  // primeiro no de playlist
+  lplaylists_no *lplaylistsNo = lpl->prox;
 
-    // get the playlist_node head pointer
-    playlist_no *head = lpl->prox->musicas;
+  // verificar se existe playlist
+  if (lplaylistsNo != NULL) {
 
-    // find the music inside that playlist
-    playlist_no *temp = head;
+    // varer as playlists
+    do {
 
-    while (temp->prox != head) {
-      // loop playlist
-      playlist_no *aux = temp;
-      temp = temp->prox;
-      if (temp->musica->id == musicId) {
-        printf("Remover musica ID %d\n", temp->musica->id);
-        aux->prox = temp->prox;
-//        temp->prox = NULL;
-        free(temp);
-        break;
+      // entrar na playlist
+      playlist_no *playlistHead = lplaylistsNo->musicas;
+      playlist_no *playlistNo = lplaylistsNo->musicas->prox;
+      playlist_no *aux = lplaylistsNo->musicas->prox;
+
+      // get previous
+      while (aux->prox != playlistNo)
+        aux = aux->prox;
+
+      if (playlistNo != NULL) {
+        playlist_no *previous = lplaylistsNo->musicas; //ok
+
+        do {
+
+          if (playlistNo->musica->id == musicId) {
+            // remover
+            if (getPlaylistSize(playlistHead) == 1) {
+              // remover musica e nao tem proximo
+              printf("Musica id %d", playlistNo->musica->id);
+              playlistHead->prox = NULL;
+              free(playlistNo);
+              break;
+            } else {
+              aux->prox = playlistNo->prox;
+              playlistHead->prox = aux;
+              free(playlistNo);
+              break;
+            }
+          }
+
+          playlistNo = playlistNo->prox;
+          previous = previous->prox;
+        } while (playlistNo != playlistHead->prox);
+
       }
-    }
-    // go to the next playlist
-    lpl = lpl->prox;
+
+      lplaylistsNo = lplaylistsNo->prox;
+    } while (lplaylistsNo != NULL);
+
   }
+
+  // remover a musica só
+  remove_ArvAVL(root, musicId);
 }
 
 lplaylists_no *createPlaylist(struct lplaylists_no *playlistsll) {
