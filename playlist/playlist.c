@@ -87,18 +87,18 @@ void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct
     struct musica *tempMusicPointer = consulta_ArvAVL(arvAVL, aux);
     if (tempMusicPointer == NULL) {
       printf("Null");
+    } else {
+      // cria o proximo no de musica
+      struct playlist_no *next = malloc(sizeof(playlist_no));
+      temp->prox = next;
+      next->musica = tempMusicPointer;
     }
 
-    // cria o proximo no de musica
-    struct playlist_no *next = malloc(sizeof(playlist_no));
-    temp->prox = next;
-    next->musica = tempMusicPointer;
-
     temp = temp->prox;
+
   }
 
   temp->prox = musicListHead->prox;
-
 }
 
 void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll) {
