@@ -150,9 +150,10 @@ int getPlaylistID() {
 void printPLaylistMusics(struct lplaylists_no *listOfPlaylistsTemp) {
   playlist_no *temp = listOfPlaylistsTemp->musicas;
 
-  if (temp->prox == NULL) // playlist nao tem musicas
+  if (temp->prox == NULL) {
     printf("\nPLaylist não possui nenhuma musica\n");
-  else {
+    return;
+  } else {
     temp = temp->prox;
     do {
       printf("MUSICA: %s ID: %d\n", temp->musica->titulo, temp->musica->id);
