@@ -7,13 +7,11 @@
 
 #include "../mymusic/music.h"
 
-// Struct Playlist
 typedef struct playlist_no {
     musica *musica;
     struct playlist_no *prox;
 } playlist_no;
 
-// Struct Linked List Playlists
 typedef struct lplaylists_no {
     int id;
     char nome[200];
@@ -21,23 +19,28 @@ typedef struct lplaylists_no {
     struct lplaylists_no *prox;
 } lplaylists_no;
 
-playlist_no *makePlaylistNo();
+void removeMusicFromPlaylists(lplaylists_no *lpl, ArvAVL *root);
 
-void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist);
+int getPlaylistSize(playlist_no *head);
 
-playlist_no *makePlaylist(musica *ll);
-
-void printPlaylistMusics(lplaylists_no *p);
-
-void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl);
-
-void removeMusicFromPlaylists(lplaylists_no *lpl);
-
-
-int playlistNoSize(playlist_no *list);
+void shuffle(lplaylists_no *lplNode);
 
 void shufflePlaylist(lplaylists_no *lplaylistsNo);
 
-int playlistLinkedListSize(lplaylists_no *lplaylistsNo);
+lplaylists_no *createPlaylist(struct lplaylists_no *playlistsll);
+
+void getVectorOfMusics(int **v, int *listMusicSize);
+
+void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct playlist_no *musicListHead);
+
+void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll);
+
+lplaylists_no *getDesiredPlaylist(int id, struct lplaylists_no *listOfPlaylistsTemp);
+
+int getPlaylistID();
+
+void printPLaylistMusics(struct lplaylists_no *listOfPlaylistsTemp);
+
+void printPLaylist(struct lplaylists_no *playlistsll);
 
 #endif //PROJECT1_PLAYLIST_H

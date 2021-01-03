@@ -2,24 +2,20 @@
 #include <stdio.h>
 #include "mymusic/music.h"
 #include "playlist/playlist.h"
+#include "ADT/treeAVL.h"
 
 int main() {
-  // No cabeça da struct de musicas
-  struct musica_no *ll = malloc(sizeof(musica_no));
-  // No cabeça da struct de playlist
-  struct playlist_no *Pll = malloc(sizeof(playlist_no));
+  // create a void tree avl and assign a pointer to it
+  ArvAVL *arvAVL = createTreeAVL();
+
   // No cabeça da struct de playlists
   struct lplaylists_no *playlistsll = malloc(sizeof(lplaylists_no));
   playlistsll->id = -1;
   playlistsll->prox = NULL;
 
-  Pll->prox = Pll;
-
   int musicId = 0;
-  int idMusicToAddPlaylist = 0;
 
   int *pMusicId = &musicId;
-  int *pPlaylistId = &idMusicToAddPlaylist;
 
   int optionSelected = 0;
   int optionPlaylist = 0;
@@ -32,13 +28,17 @@ int main() {
     switch (optionSelected) {
       case 1:
         printf("CADASTRAR NOVA MÚSICA \n");
-        insertOnHead(ll, pMusicId);
+        insertOnTree(arvAVL, pMusicId);
         break;
       case 2:
         printf("IMPRIMIR TODAS AS MÚSICAS\n");
-        listAndPrintLL(ll);
+        printAllMusics(arvAVL);
         break;
       case 3:
+        printf("REMOVER MÚSICA\n");
+        removeMusicFromPlaylists(playlistsll, arvAVL);
+        break;
+      case 4:
         makePlaylistMenu();
         printf("Selecione uma opção: \n");
         fflush(stdin);
@@ -46,8 +46,7 @@ int main() {
         switch (optionPlaylist) {
           case 1:
             printf("CRIAR NOVA PLAYLIST\n");
-            insertOnPLaylistHead(ll, idMusicToAddPlaylist, playlistsll);
-            idMusicToAddPlaylist++;
+            createPlaylistWithMusics(arvAVL, playlistsll);
             break;
           case 2:
             // TODO
@@ -56,15 +55,9 @@ int main() {
             break;
           case 3:
             printf("IMPRIME PLAYLIST\n");
-            printPlaylistMusics(playlistsll);
-            break;
-          case 4:
-            // TODO
-            printf("REMOVER MÚSICA DE TODAS AS PLAYLIST\n");
-            removeMusicFromPlaylists(playlistsll);
+            printPLaylist(playlistsll);
             break;
           case 0:
-            // TODO
             printf("Voltando para o menu principal..\n");
             break;
           default:
@@ -80,5 +73,4 @@ int main() {
         break;
     }
   }
-
 }

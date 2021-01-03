@@ -6,6 +6,7 @@
 #define PROJECT1_MUSIC_H
 
 #include <stdbool.h>
+#include "../ADT/treeAVL.h"
 
 typedef struct musica {
     int id;
@@ -15,22 +16,11 @@ typedef struct musica {
     int duracao; //segundos
 } musica;
 
-
-typedef struct musica_no {
-    musica *musica;
-    struct musica_no *ant;
-    struct musica_no *prox;
-} musica_no;
+void insertOnTree(struct treeAVLNode **arvAvl, int *musicId);
 
 musica *createMusicNode(int *musicId);
 
-void insertOnHead(musica_no *musica, int *musicId);
-
-void listAndPrintLL(musica_no *ll);
-
-void *convertHHMMSS(musica *musica);
-
-int isMusicLinkedListEmpty(musica_no *ll);
+void printAllMusics(struct treeAVLNode **arvAvl);
 
 void makePrincipalMenu();
 

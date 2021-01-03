@@ -4,270 +4,255 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 #include "../mymusic/music.h"
 #include "../playlist/playlist.h"
 
-
-/*  Função: Enserir nova música na playlist
- *  Params: Ponteiro para lista de músicas, INT id das músicas, Ponteiro da playlist
- *  Return: void
- */
-void insertMusicOnPlaylist(musica_no *ll, int musicId, playlist_no *playlist) {
-  musica_no *nodeMusic = ll->prox;
-  while (nodeMusic->musica->id != musicId) {
-    nodeMusic = nodeMusic->prox;
-  }
-
-  playlist_no *newNode = malloc(sizeof(playlist_no));
-  newNode->musica = nodeMusic->musica;
-
-  // insert
-  if (playlist->prox == NULL) {
-    playlist->prox = newNode;
-    newNode->prox = playlist;
-  } else {
-    playlist_no *playlistTemp = playlist;
-    while (playlistTemp->prox != playlist) {
-      playlistTemp = playlistTemp->prox;
-    }
-    newNode->prox = playlist;
-    playlistTemp->prox = newNode;
-  }
-}
-
-
-/*  Função: Criar uma nova playlist
- *  Params: Ponteiro da lista de músicas
- *  Return: Ponteiro da playlist criada
- */
-playlist_no *makePlaylist(musica *ll) {
-  int size = 0;
-
-  printf("Digite o tamanho da playlist: ");
-  scanf("%d", &size);
-  int v[size];
-  fflush(stdin);
-
-  printf("Digite os id das musicas separadas por espaco: ");
-  for (int j = 0; j < size; ++j) {
-    scanf("%d", &v[j]);
-  }
-
-  // create playlist
-  struct playlist_no *playlistNo = malloc(sizeof(struct playlist_no));
-  playlistNo->prox = playlistNo;
-
-  for (int j = 0; j < size; ++j) {
-    int aux = v[j];
-    insertMusicOnPlaylist(ll, aux, playlistNo);
-  }
-
-  return playlistNo;
-}
-
-
-/*  Função: Inserie playlist na lista de playlists
- *  Params: Ponteiro de lista de músicas, INT playlistId, ponteiro para lista de playlist
- *  Return: void
- */
-void insertOnPLaylistHead(musica_no *ll, int playlistId, lplaylists_no *lpl) {
-  struct lplaylists_no *newPlaylist = malloc(sizeof(lplaylists_no));
-
-  if (lpl->prox == NULL) {
-    lpl->prox = newPlaylist;
-  } else {
-    while (lpl->prox != NULL) {
-      lpl = lpl->prox;
-    }
-    lpl->prox = newPlaylist;
-  }
-
-  printf("Digite o nome da playlist: ");
-  scanf("%s", newPlaylist->nome);
-  fflush(stdin);
-  lpl->prox->id = playlistId;
-  newPlaylist->musicas = makePlaylist(ll);
-}
-
-
-/* Função: Printa a playlist escolhida
-*  Params: Ponteiro para lista de playlist
-*  Return: void
-*/
-void printPlaylistMusics(lplaylists_no *p) {
-  int id;
-  printf("Digite o id da playlist: ");
-  scanf("%d", &id);
-
-  // check if there is playlist
-  if (p->prox == NULL) {
-    printf("Playlist não encontrada.\n");
-    return;
-  }
-
-  int size = playlistLinkedListSize(p);
-
-  while (size > 0) {
-    p = p->prox;
-
-    // find here
-    if (p->id == id) {
-      break;
-    }
-    size--;
-  }
-
-  // Not found
-  if (p->prox == NULL && size == 0) {
-    printf("Playlist não encontrada.\n");
-    return;
-  }
-
-  playlist_no *head = p->musicas;
-  if (head->prox == head)
-    printf("\nList is Empty!!!\n");
-  else {
-    int size = playlistNoSize(head);
-    printf("\nAs músicas da playlist %d são: \n", id);
-    while (size > 0) {
-      head = head->prox;
-      printf("MUSICA: %s ID: %d\n", head->musica->titulo, head->musica->id);
-      size--;
-    }
-    printf("\nFim\n");
-  }
-}
-
-
-/* Função: Remove Musica da playlists.
-*  Params: Ponteiro para lista de playlist
-*  Return: void
-*/
-void removeMusicFromPlaylists(lplaylists_no *lpl) {
+void removeMusicFromPlaylists(lplaylists_no *lpl, ArvAVL *root) {
   int musicId;
   printf("Digite o ID da musica: ");
   scanf("%d", &musicId);
 
-  // loop through playlists
-  while (lpl->prox != NULL) {
+  // primeiro no de playlist
+  lplaylists_no *lplaylistsNo = lpl->prox;
 
-    // get the playlist_node head pointer
-    playlist_no *head = lpl->prox->musicas;
+  // verificar se existe playlist
+  if (lplaylistsNo != NULL) {
 
-    // find the music inside that playlist
-    playlist_no *temp = head;
+    // varer as playlists
+    do {
 
-    while (temp->prox != head) {
-      // loop playlist
-      playlist_no *aux = temp;
-      temp = temp->prox;
-      if (temp->musica->id == musicId) {
-        printf("Remover musica ID %d\n", temp->musica->id);
-        aux->prox = temp->prox;
-//        temp->prox = NULL;
-        free(temp);
-        break;
+      // entrar na playlist
+      playlist_no *playlistHead = lplaylistsNo->musicas;
+      playlist_no *playlistNo = lplaylistsNo->musicas->prox;
+      playlist_no *aux = lplaylistsNo->musicas->prox;
+
+      // get previous
+      while (aux->prox != playlistNo)
+        aux = aux->prox;
+
+      if (playlistNo != NULL) {
+        playlist_no *previous = lplaylistsNo->musicas; //ok
+
+        do {
+
+          if (playlistNo->musica->id == musicId) {
+            // remover
+            if (getPlaylistSize(playlistHead) == 1) {
+              // remover musica e nao tem proximo
+              printf("Musica id %d", playlistNo->musica->id);
+              playlistHead->prox = NULL;
+              free(playlistNo);
+              break;
+            } else {
+              aux->prox = playlistNo->prox;
+              playlistHead->prox = aux;
+              free(playlistNo);
+              break;
+            }
+          }
+
+          playlistNo = playlistNo->prox;
+          previous = previous->prox;
+        } while (playlistNo != playlistHead->prox);
+
       }
-    }
-    // go to the next playlist
-    lpl = lpl->prox;
+
+      lplaylistsNo = lplaylistsNo->prox;
+    } while (lplaylistsNo != NULL);
+
   }
+
+  // remover a musica só
+  remove_ArvAVL(root, musicId);
 }
 
+lplaylists_no *createPlaylist(struct lplaylists_no *playlistsll) {
+  // criar um no de playlist
+  struct lplaylists_no *playList = malloc(sizeof(lplaylists_no));
 
-/* Função: Retorna o tamanho da lista de playlists.
-*  Params: Ponteiro para lista de playlist
-*  Return: void
-*/
-int playlistLinkedListSize(lplaylists_no *lplaylistsNo) {
-  int size = 0;
+  // Pega o nome da playlist
+  printf("Digite o nome da playlist: ");
+  scanf("%s", playList->nome);
+  fflush(stdin);
 
-  if (lplaylistsNo->prox == NULL) {
-    return 0;
+  // buscar o local correto de insercao na lista de playlists e incrementar id;
+  lplaylists_no *p = playlistsll;
+  while (p->prox != NULL) {
+    p = p->prox;
   }
+  p->prox = playList;
+  p->prox->id = p->id + 1;
 
-  while (lplaylistsNo->prox != NULL) {
-    size++;
-    lplaylistsNo = lplaylistsNo->prox;
-  }
-
-  return size;
+  return playList;
 }
 
+void getVectorOfMusics(int **v, int *listMusicSize) {
+  (*listMusicSize) = 0;
+  printf("Digite o tamanho da playlist: ");
+  scanf("%d", listMusicSize);
 
-/* Função: Retorna o tamanho da lista de playlist.
-*  Params: Ponteiro para playlist
-*  Return: void
-*/
-int playlistNoSize(playlist_no *list) {
-  int size = 0;
-
-  playlist_no *head = list;
-
-  if (list->prox == head) {
-    return 0;
-  }
-
-  while (list->prox != head) {
-    size++;
-    list = list->prox;
-  }
-
-  return size;
-}
-
-
-/* Função: Shuffle Playlist.
-*  Params: Ponteiro para lista de playlist
-*  Return: void
-*/
-void shufflePlaylist(lplaylists_no *lplaylistsNo) {
-  printf("Digite o ID da playlist: ");
-  int id = -1;
-  scanf("%d", &id);
-
-  int lplSize = playlistLinkedListSize(lplaylistsNo);
-  lplaylists_no *lplNode = lplaylistsNo->prox;
-  while (lplSize > 0) {
-    if (lplNode->id == id) {
-      break;
-    }
-    lplNode = lplNode->prox;
-    lplSize--;
-  }
-
-  if (lplSize == 0) {
-    printf("PLaylist não encontrada.\n");
+  if (*listMusicSize <= 0) {
+    printf("\nPlaylist criada sem musica!\n");
     return;
   }
 
+  (*v) = malloc((*listMusicSize) * sizeof(int));
+  fflush(stdin);
 
-  playlist_no *head = lplNode->musicas;
-  int count = playlistNoSize(head);
-
-  for (int i = 0; i < count; ++i) {
-    int musicSize = playlistNoSize(head);
-    playlist_no *n1 = head->prox;
-    playlist_no *n2 = head->prox;
-    musica *temp;
-
-
-    int a = (rand() % (musicSize - 1));
-    int b = (rand() % (musicSize - 1));
-
-    // get first
-    for (int i = 0; i < a; ++i) {
-      n1 = n1->prox;
-    }
-
-    // get second
-    for (int i = 0; i < b; ++i) {
-      n2 = n2->prox;
-    }
-
-    temp = n1->musica;
-    n1->musica = n2->musica;
-    n2->musica = temp;
+  printf("Digite os id das musicas separadas por espaco: ");
+  for (int j = 0; j < (*listMusicSize); ++j) {
+    scanf("%d", &(*v)[j]);
   }
+}
+
+void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct playlist_no *musicListHead) {
+  playlist_no *temp = musicListHead;
+
+  for (int j = 0; j < listMusicSize; ++j) {
+    int aux = v[j];
+
+    // buscar na arvore a musica
+    struct musica *tempMusicPointer = consulta_ArvAVL(arvAVL, aux);
+    if (tempMusicPointer == NULL) {
+      printf("Null");
+    } else {
+      // cria o proximo no de musica
+      struct playlist_no *next = malloc(sizeof(playlist_no));
+      temp->prox = next;
+      next->musica = tempMusicPointer;
+    }
+
+    temp = temp->prox;
+
+  }
+
+  temp->prox = musicListHead->prox;
+}
+
+void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll) {
+  lplaylists_no *playList = createPlaylist(playlistsll);
+
+  // atribui lista de musicas à playlist
+  playList->musicas = malloc(sizeof(playlist_no));
+
+  // Pegar lista de musicas que o cara quer
+  int *v;
+  int listMusicSize;
+  getVectorOfMusics(&v, &listMusicSize);
+
+  struct playlist_no *musicListHead = playList->musicas;
+
+  addMusicsToPlaylist(arvAVL, v, listMusicSize, musicListHead);
+}
+
+lplaylists_no *getDesiredPlaylist(int id, struct lplaylists_no *listOfPlaylistsTemp) {
+  // checa se a lista de playlist tem 1 playlist pelo menos
+  if (listOfPlaylistsTemp->prox == NULL) {
+    printf("Playlist não encontrada.\n");
+    return NULL;
+  }
+
+  // procura a playlista desejada
+  do {
+    listOfPlaylistsTemp = listOfPlaylistsTemp->prox;
+    if (listOfPlaylistsTemp->id == id) {
+      break;
+    }
+  } while (listOfPlaylistsTemp->prox != NULL);
+
+  // verificar se encontrou ou se saiu NULL
+  if (listOfPlaylistsTemp == NULL) {
+    return NULL;
+  }
+
+  return listOfPlaylistsTemp;
+}
+
+int getPlaylistID() {
+  int id;
+  printf("Digite o id da playlist: ");
+  scanf("%d", &id);
+  return id;
+}
+
+void printPLaylistMusics(struct lplaylists_no *listOfPlaylistsTemp) {
+  playlist_no *temp = listOfPlaylistsTemp->musicas;
+
+  if (temp->prox == NULL) {
+    printf("\nPLaylist não possui nenhuma musica\n");
+    return;
+  } else {
+    temp = temp->prox;
+    do {
+      printf("MUSICA: %s ID: %d\n", temp->musica->titulo, temp->musica->id);
+      temp = temp->prox;
+    } while (temp->musica != listOfPlaylistsTemp->musicas->prox->musica);
+    printf("\nFim\n");
+  }
+}
+
+void printPLaylist(struct lplaylists_no *playlistsll) {// pegar o id da playlist desejada
+  int id = getPlaylistID();
+
+  // procurar se a playlist existe e retornar ponteiro para ela
+  struct lplaylists_no *listOfPlaylistsTemp = playlistsll;
+  listOfPlaylistsTemp = getDesiredPlaylist(id, listOfPlaylistsTemp);
+
+  if (listOfPlaylistsTemp != NULL) {
+    printPLaylistMusics(listOfPlaylistsTemp);
+  } else {
+    printf("\n\nPLaylist não encontrada!!\n");
+  }
+}
+
+void shufflePlaylist(lplaylists_no *lplaylistsNo) {
+
+  // pegar id da playlist
+  int id = getPlaylistID();
+
+  if (id < 0) {
+    printf("Valor invalido\n");
+    return;
+  }
+
+  lplaylists_no *lplNode = getDesiredPlaylist(id, lplaylistsNo);
+  if (lplNode == NULL) {
+    printf("PLaylist não encontrada\n");
+    return;
+  }
+
+  shuffle(lplNode);
+}
+
+int getPlaylistSize(playlist_no *head) {
+  int c = 0;
+  playlist_no *temp = head->prox;
+
+  do {
+    c++;
+    temp = temp->prox;
+  } while (temp != head->prox);
+  return c;
+}
+
+void shuffle(lplaylists_no *lplNode) {
+  int aux;
+  int musicSize = getPlaylistSize(lplNode->musicas);
+
+  playlist_no *pPlaylistNo = lplNode->musicas->prox;
+
+  do {
+    aux = (rand() % (musicSize - 1));
+
+    playlist_no *pPLaylistNoAux = lplNode->musicas->prox;
+    for (int i = 0; i < aux; ++i) {
+      pPLaylistNoAux = pPLaylistNoAux->prox;
+    }
+
+    musica *musicaTemp = pPlaylistNo->musica;
+    pPlaylistNo->musica = pPLaylistNoAux->musica;
+    pPLaylistNoAux->musica = musicaTemp;
+
+    pPlaylistNo = pPlaylistNo->prox;
+  } while (pPlaylistNo != lplNode->musicas->prox);
 }
