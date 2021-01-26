@@ -125,7 +125,6 @@ void addMusicsToPlaylist(ArvAVL *arvAVL, const int *v, int listMusicSize, struct
     temp = temp->prox;
 
   }
-
   temp->prox = musicListHead->prox;
 }
 
@@ -143,6 +142,8 @@ void createPlaylistWithMusics(ArvAVL *arvAVL, struct lplaylists_no *playlistsll)
   struct playlist_no *musicListHead = playList->musicas;
 
   addMusicsToPlaylist(arvAVL, v, listMusicSize, musicListHead);
+
+  free(v);
 }
 
 lplaylists_no *getDesiredPlaylist(int id, struct lplaylists_no *listOfPlaylistsTemp) {

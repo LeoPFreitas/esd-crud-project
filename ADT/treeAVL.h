@@ -45,7 +45,7 @@ void RotacaoRL(ArvAVL *A);
 
 int insere_ArvAVL(ArvAVL *raiz, struct musica *musica);
 
-ArvAVL procuraMearvAVLr(struct treeAVLNode* atual);
+ArvAVL procuraAVLr(struct treeAVLNode* atual);
 
 int remove_ArvAVL(ArvAVL *raiz, int valor);
 

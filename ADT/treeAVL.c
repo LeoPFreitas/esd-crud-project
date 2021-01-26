@@ -13,6 +13,9 @@ struct treeAVLNode {
     struct treeAVLNode *dir;
 };
 
+/*
+ * Cria arvore AVL e retorna para cabeça da Arvore AVL
+ * */
 ArvAVL *createTreeAVL() {
   ArvAVL *root = (ArvAVL *) malloc(sizeof(ArvAVL));
 
@@ -23,6 +26,9 @@ ArvAVL *createTreeAVL() {
   return root;
 }
 
+/*
+ * Da free em um nó
+ * */
 void clearTreeNode(struct treeAVLNode *arvAVL) {
   if (arvAVL == NULL)
     return;
@@ -39,6 +45,9 @@ void clearTreeAVL(ArvAVL *root) {
   free(root);//libera a root
 }
 
+/*
+ * Pega a altura do nó
+ * */
 int getNodeHigh(struct treeAVLNode *arvAVL) {
   if (arvAVL == NULL)
     return -1;
@@ -46,17 +55,25 @@ int getNodeHigh(struct treeAVLNode *arvAVL) {
     return arvAVL->altura;
 }
 
+/*
+ *  Verifica se a arvore esta balanceada
+ * */
 int getBalancefactor(struct treeAVLNode *arvAVL) {
   return labs(getNodeHigh(arvAVL->esq) - getNodeHigh(arvAVL->dir));
 }
 
+/*
+ *  Retornar o lado mais alto
+ * */
 int isHigher(int x, int y) {
   if (x > y)
     return x;
   else
     return y;
 }
-
+/*
+ * Verifica se a arvore esta vazia
+ * */
 int isTreeAVLEmpty(ArvAVL *root) {
   if (root == NULL)
     return 1;
@@ -65,6 +82,9 @@ int isTreeAVLEmpty(ArvAVL *root) {
   return 0;
 }
 
+/*
+ * Return total de nós
+ * */
 int totalNO_ArvAVL(ArvAVL *root) {
   if (root == NULL)
     return 0;
@@ -75,6 +95,9 @@ int totalNO_ArvAVL(ArvAVL *root) {
   return (alt_esq + alt_dir + 1);
 }
 
+/*
+ * Retorna a altura da arvore
+ * */
 int altura_ArvAVL(ArvAVL *raiz) {
   if (raiz == NULL)
     return 0;
@@ -88,6 +111,9 @@ int altura_ArvAVL(ArvAVL *raiz) {
     return (alt_dir + 1);
 }
 
+/*
+ * Trata raiz, percorre SAE, percorre SAD
+ * */
 void preOrdem_ArvAVL(ArvAVL *raiz) {
   if (raiz == NULL)
     return;
@@ -100,6 +126,9 @@ void preOrdem_ArvAVL(ArvAVL *raiz) {
   }
 }
 
+/*
+ * Percorre SAE, trata raiz, percorre SAD
+ * */
 void emOrdem_ArvAVL(ArvAVL *raiz) {
   if (raiz == NULL)
     return;
@@ -111,6 +140,9 @@ void emOrdem_ArvAVL(ArvAVL *raiz) {
   }
 }
 
+/*
+ * Percorre SAE, percorre SAD, trata raiz
+ * */
 void posOrdem_ArvAVL(ArvAVL *raiz) {
   if (raiz == NULL)
     return;
@@ -120,7 +152,9 @@ void posOrdem_ArvAVL(ArvAVL *raiz) {
     printf("%d\n", (*raiz)->musica->id);
   }
 }
-
+/*
+ * Busca binária e retorna musica ou nulo
+ * */
 struct musica *consulta_ArvAVL(ArvAVL *raiz, int valor) {
   if (raiz == NULL)
     return NULL;
@@ -137,7 +171,9 @@ struct musica *consulta_ArvAVL(ArvAVL *raiz, int valor) {
   return NULL;
 }
 
-//=================================
+/*
+ * Rotação dupla a esquerda
+ * */
 void RotacaoLL(ArvAVL *A) {//LL
   printf("RotacaoLL\n");
   struct treeAVLNode *B;
@@ -149,6 +185,9 @@ void RotacaoLL(ArvAVL *A) {//LL
   *A = B;
 }
 
+/*
+ * Rotação dupla a direita
+ * */
 void RotacaoRR(ArvAVL *A) {//RR
   printf("RotacaoRR\n");
   struct treeAVLNode *B;
@@ -160,16 +199,26 @@ void RotacaoRR(ArvAVL *A) {//RR
   (*A) = B;
 }
 
+/*
+ * Rotação dupla Esqueda Direita
+ * */
 void RotacaoLR(ArvAVL *A) {//LR
   RotacaoRR(&(*A)->esq);
   RotacaoLL(A);
 }
 
+/*
+ * Rotação dupla Direita Esqueda
+ * */
 void RotacaoRL(ArvAVL *A) {//RL
   RotacaoLL(&(*A)->dir);
   RotacaoRR(A);
 }
 
+
+/*
+ * Insere um nó de musica na arvoreAVL
+ * */
 int insere_ArvAVL(ArvAVL *raiz, struct musica *musica) {
   int res;
   if (*raiz == NULL) {
@@ -219,7 +268,10 @@ int insere_ArvAVL(ArvAVL *raiz, struct musica *musica) {
   return res;
 }
 
-ArvAVL procuraMearvAVLr(ArvAVL atual) {
+/*
+ * Retorna folha
+ * */
+ArvAVL procuraAVLr(ArvAVL atual) {
   ArvAVL arvAVL1 = atual;
   ArvAVL arvAVL2 = atual->esq;
   while (arvAVL2 != NULL) {
@@ -229,6 +281,9 @@ ArvAVL procuraMearvAVLr(ArvAVL atual) {
   return arvAVL1;
 }
 
+/*
+ * Remove musica
+ * */
 int remove_ArvAVL(ArvAVL *raiz, int valor) {
   if (*raiz == NULL) {// valor nao existe
     printf("valor nao existe!!\n");
@@ -267,7 +322,7 @@ int remove_ArvAVL(ArvAVL *raiz, int valor) {
         *raiz = (*raiz)->dir;
       free(oldNode);
     } else { // arvAVL tem 2 filhos
-      struct treeAVLNode *temp = procuraMearvAVLr((*raiz)->dir);
+      struct treeAVLNode *temp = procuraAVLr((*raiz)->dir);
       (*raiz)->musica = temp->musica;
       remove_ArvAVL(&(*raiz)->dir, (*raiz)->musica->id);
       if (getBalancefactor(*raiz) >= 2) {
