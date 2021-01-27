@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include "treeAVL.h"
 
+/*
+ * Struct de um nó arvore musicas
+ * */
 struct treeAVLNode {
     struct musica *musica;
     int altura;
@@ -14,7 +17,9 @@ struct treeAVLNode {
 };
 
 /*
- * Cria arvore AVL e retorna para cabeça da Arvore AVL
+ * Objetivo: Cria arvore AVL.
+ * Params: void.
+ * Return: retorna ponteiro Arvore AVL.
  * */
 ArvAVL *createTreeAVL() {
   ArvAVL *root = (ArvAVL *) malloc(sizeof(ArvAVL));
@@ -27,7 +32,9 @@ ArvAVL *createTreeAVL() {
 }
 
 /*
- * Da free em um nó
+ * Objetivo: Da free em um nó arvore. Limpa o nó da esquerda e depois o da direita e por ultimo free na raiz.
+ * Params: ponteiro para nó de treeAVLNode.
+ * Return: void.
  * */
 void clearTreeNode(struct treeAVLNode *arvAVL) {
   if (arvAVL == NULL)
@@ -46,7 +53,9 @@ void clearTreeAVL(ArvAVL *root) {
 }
 
 /*
- * Pega a altura do nó
+ * Objetivo: Pegar a altura do nó.
+ * Params: ponteiro para nó de treeAVLNode.
+ * Return: Int altura do nó arvore
  * */
 int getNodeHigh(struct treeAVLNode *arvAVL) {
   if (arvAVL == NULL)
@@ -56,14 +65,18 @@ int getNodeHigh(struct treeAVLNode *arvAVL) {
 }
 
 /*
- *  Verifica se a arvore esta balanceada
+ *  Objetivo: Verifica se a arvore esta balanceada. Faz a diferença entre a altura do lado esquerdo com o lado direito.
+ *  Params: ponteiro para nó de treeAVLNode.
+ *  Return: Int altura do nó arvore
  * */
 int getBalancefactor(struct treeAVLNode *arvAVL) {
   return labs(getNodeHigh(arvAVL->esq) - getNodeHigh(arvAVL->dir));
 }
 
 /*
- *  Retornar o lado mais alto
+ *  Objetivo: Compara dois inteiros e retornar o maior.
+ *  Params: x: int y: int
+ *  Return: int
  * */
 int isHigher(int x, int y) {
   if (x > y)
@@ -72,7 +85,9 @@ int isHigher(int x, int y) {
     return y;
 }
 /*
- * Verifica se a arvore esta vazia
+ * Objetivo: Verifica se a arvore esta null
+ * Params: ponteiro de ArvAVL
+ * Return: 1 se for null e 0 se n for null.
  * */
 int isTreeAVLEmpty(ArvAVL *root) {
   if (root == NULL)
@@ -83,7 +98,9 @@ int isTreeAVLEmpty(ArvAVL *root) {
 }
 
 /*
- * Return total de nós
+ * Objetivo: Returna total de nós da arvore
+ * Params: ponteiro para ArvAVL
+ * Return o numero de nos do SAE + SAD
  * */
 int totalNO_ArvAVL(ArvAVL *root) {
   if (root == NULL)
@@ -96,7 +113,9 @@ int totalNO_ArvAVL(ArvAVL *root) {
 }
 
 /*
- * Retorna a altura da arvore
+ * Objetivo: Verifica qual lado é mais alto e retorna ele + 1
+ * Params: ponteiro para ArvAVL
+ * Return: lado mais alto + 1
  * */
 int altura_ArvAVL(ArvAVL *raiz) {
   if (raiz == NULL)
@@ -153,7 +172,9 @@ void posOrdem_ArvAVL(ArvAVL *raiz) {
   }
 }
 /*
- * Busca binária e retorna musica ou nulo
+ * Objetivo: encotrar a musica.
+ * Params: ponteiro para ArvAVL e o valor do id ser encontrado.
+ * Return: Null caso nao encontre ou retorna a musica.
  * */
 struct musica *consulta_ArvAVL(ArvAVL *raiz, int valor) {
   if (raiz == NULL)
@@ -171,8 +192,9 @@ struct musica *consulta_ArvAVL(ArvAVL *raiz, int valor) {
   return NULL;
 }
 
-/*
- * Rotação dupla a esquerda
+/* Objetivo: Rotação simples a Direita. Balancear a arvore para direita.
+ * Params: ponteiro de ArvAVL
+ * Return: void
  * */
 void RotacaoLL(ArvAVL *A) {//LL
   printf("RotacaoLL\n");
@@ -186,7 +208,9 @@ void RotacaoLL(ArvAVL *A) {//LL
 }
 
 /*
- * Rotação dupla a direita
+ * Rotação simples a Esquerda. Balancear a arvore para direita.
+ * Params: ponteiro de ArvAVL
+ * Return: void
  * */
 void RotacaoRR(ArvAVL *A) {//RR
   printf("RotacaoRR\n");
@@ -200,7 +224,9 @@ void RotacaoRR(ArvAVL *A) {//RR
 }
 
 /*
- * Rotação dupla Esqueda Direita
+ * Rotação dupla Direita. Quando os fatores estiverem com sinais diferentes.
+ * Params: ponteiro de ArvAVL
+ * Return: void
  * */
 void RotacaoLR(ArvAVL *A) {//LR
   RotacaoRR(&(*A)->esq);
@@ -208,7 +234,9 @@ void RotacaoLR(ArvAVL *A) {//LR
 }
 
 /*
- * Rotação dupla Direita Esqueda
+ * Rotação dupla Esqueda. Quando os fatores estiverem com sinais diferentes.
+ * Params: ponteiro de ArvAVL
+ * Return: void
  * */
 void RotacaoRL(ArvAVL *A) {//RL
   RotacaoLL(&(*A)->dir);
@@ -217,7 +245,9 @@ void RotacaoRL(ArvAVL *A) {//RL
 
 
 /*
- * Insere um nó de musica na arvoreAVL
+ * Objetivo: Insere um nó de musica na arvoreAVL e rebalanceia após inserção
+ * Params: ponteiro de ArvAVL e ponteiro de musica
+ * Return: 0 se não inseriu e 1 se inseriu.
  * */
 int insere_ArvAVL(ArvAVL *raiz, struct musica *musica) {
   int res;
@@ -269,7 +299,9 @@ int insere_ArvAVL(ArvAVL *raiz, struct musica *musica) {
 }
 
 /*
- * Retorna folha
+ * Objetivo: encotrar a folha a esquerda.
+ * Params: ponteiro de ArvAVL
+ * Return: Nó de ArvAVL
  * */
 ArvAVL procuraAVLr(ArvAVL atual) {
   ArvAVL arvAVL1 = atual;
@@ -282,7 +314,9 @@ ArvAVL procuraAVLr(ArvAVL atual) {
 }
 
 /*
- * Remove musica
+ * Objetivo: Remover musica
+ * Params: ponteiro de ArvAVL e int do id da musica
+ * Return: 0 se não encontrou ou 1 se removeu.
  * */
 int remove_ArvAVL(ArvAVL *raiz, int valor) {
   if (*raiz == NULL) {// valor nao existe
