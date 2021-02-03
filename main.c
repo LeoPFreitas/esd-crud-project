@@ -4,8 +4,6 @@
 #include "playlist/playlist.h"
 #include "ADT/treeAVL.h"
 
-// TODO rever a remocao de muscia com plylsit que contem 2 musicas e 1 playlist
-
 int main() {
   // create a void tree avl and assign a pointer to it
   ArvAVL *arvAVL = createTreeAVL();

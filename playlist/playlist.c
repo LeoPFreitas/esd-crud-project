@@ -27,7 +27,7 @@ void removeMusicFromPlaylists(lplaylists_no *lpl, ArvAVL *root) {
       playlist_no *aux = lplaylistsNo->musicas->prox;
 
       // get previous
-      while (aux->prox != playlistNo)
+      while (aux->prox->musica->id != musicId)
         aux = aux->prox;
 
       if (playlistNo != NULL) {
